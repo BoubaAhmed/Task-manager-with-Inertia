@@ -1,1 +1,1 @@
-hello world
+Ce projet  a ´et´e d´evelopp´e dans le cadre du module Dev mobile et web du cycle de master Systemes intelligents a Ens Meknes. L’objectif principal de ce projet est de cr´eer une application web permettant de g´erer des tˆaches, des utilisateurs,des assignations et des projets de mani`ere efficace.
