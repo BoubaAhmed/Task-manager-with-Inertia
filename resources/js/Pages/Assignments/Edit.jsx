@@ -7,6 +7,7 @@ const Edit = ({ assignment, users, tasks }) => {
     user_id: assignment.user_id,
     task_id: assignment.task_id,
     assigned_date: assignment.assigned_date,
+    status: assignment.status,
   });
 
   const handleSubmit = (e) => {
@@ -98,8 +99,26 @@ const Edit = ({ assignment, users, tasks }) => {
             />
             {errors.assigned_date && <div className="text-red-500 text-xs">{errors.assigned_date}</div>}
           </div>
+          <div className="col-span-2">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="status">
+              Status
+            </label>
+            <select
+              name="status"
+              id="status"
+              className="shadow appearance-none border rounded w-full py-2 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              value={data.status}
+              onChange={(e) => setData('status', e.target.value)}  // Update 'status' instead of 'assigned_date'
+              required
+            >
+              <option value="pending">Pending</option>
+              <option value="in-progress">In Progress</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+            {errors.status && <div className="text-red-500 text-xs">{errors.status}</div>}
+          </div>
 
-          {/* Submit Button */}
           <div className="flex items-center justify-end col-span-2 gap-4">
             <button
               type="submit"

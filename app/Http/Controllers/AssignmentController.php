@@ -8,9 +8,15 @@ use App\Models\Tache;
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class AssignmentController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('ensureSuperuser')->except(['index','markAsCompleted','markAsCancelled','markAsProgressing']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -38,11 +44,13 @@ class AssignmentController extends Controller
     public function create()
     {
         $users = User::all();
-        $tasks = Tache::whereNotIn('status', ['cancelled', 'completed'])->get();
+        $projects = Project::all();
+        $tasks = Tache::whereNotIn('status', ['cancelled'])->get();
 
         return Inertia::render('Assignments/Create', [
             'users' => $users,
             'tasks' => $tasks,
+            'projects' => $projects,
         ]);
     }
 
@@ -62,11 +70,11 @@ class AssignmentController extends Controller
         $task = Tache::find($request->task_id);
 
         if ($task->isCompleted()) {
-            return redirect()->route('assignments.create')->withErrors('Cannot assign user to a completed task.');
+            return redirect()->route('assignments.create')->with('error', 'Cannot assign user to a completed task.');
         }
 
         if (Assignment::isUserAssignedToSameTaskInProject(new Assignment($request->all()))) {
-            return redirect()->route('assignments.create')->withErrors('User is already assigned to this task in the project.');
+            return redirect()->route('assignments.create')->with('error', 'User is already assigned to this task in the project.');
         }
 
         $project = $task->project;  
@@ -124,17 +132,17 @@ class AssignmentController extends Controller
      */
     public function update(Request $request, Assignment $assignment)
     {
-        $request->validate([
+        $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
-            'task_id' => 'required|exists:taches,id',
+            'task_id' => 'required|exists:taches,id', 
+            'status' => 'required|in:pending,in-progress,completed,cancelled', 
             'assigned_date' => 'required|date',
         ]);
-
-        $assignment->update($request->all());
-
+    
+        $assignment->update($validated);
         return redirect()->route('assignments.index');
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -153,8 +161,29 @@ class AssignmentController extends Controller
         if ($assignment->user_id !== $request->user()->id) {
             return redirect()->back()->with('error', 'Vous n\'avez pas la permission de mettre cette tache complete.');
         }
-        $assignment->markAsCompleted();
-        return redirect()->route('assignments.index')->with('success', 'Assignment marked as completed');
+        $assignment->update(['status' => 'completed']);
+        $assignment->checkAndUpdateTaskStatus($assignment->task);
+        return redirect()->back()->with('success', 'Assignment marked as completed');
+    }
+    
+    public function markAsCancelled(Request $request, Assignment $assignment)
+    {
+        if ($assignment->user_id !== $request->user()->id) {
+            return redirect()->back()->with('error', 'Vous n\'avez pas la permission de mettre cette tache cancelled.');
+        }
+        $assignment->update(['status' => 'cancelled']);
+        $assignment->checkAndUpdateTaskStatus($assignment->task);
+        return redirect()->back()->with('success', 'Assignment marked as Cancelled');
+    }
+
+    public function markAsProgressing(Request $request, Assignment $assignment)
+    {
+        if ($assignment->user_id !== $request->user()->id) {
+            return redirect()->back()->with('error', 'Vous n\'avez pas la permission de mettre cette tache progress.');
+        }
+        $assignment->update(['status' => 'in-progress']);
+        $assignment->checkAndUpdateTaskStatus($assignment->task);
+        return redirect()->back()->with('success', 'Assignment marked as Progressing');
     }
 
 }

@@ -84,7 +84,7 @@ const Index = ({ projects }) => {
                   </div>
               )}
           </div>
-          {/* {auth.is_superuser &&  */}
+          {auth.is_superuser && 
           <Link
             href="/projects/create"
             className="group relative inline-flex items-center overflow-hidden rounded border border-current px-4 py-2 text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
@@ -107,7 +107,7 @@ const Index = ({ projects }) => {
             </span>
             <span className="text-xs font-medium transition-all group-hover:me-2">Ajouter</span>
           </Link>
-          {/* }*/}
+          }
         </div>
       }
     >
@@ -258,7 +258,19 @@ const Index = ({ projects }) => {
               {currentProjects.map((project) => (
                 <tr key={project.id} className="hover:bg-gray-100">
                   <td className="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">{project.name}</td>
-                  <td className="px-6 py-3 whitespace-nowrap text-sm text-gray-500">{project.status}</td>
+                  <td className="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
+                    <span className={`flex items-center gap-2 ${project.status === 'completed' ? 'text-green-400 font-bold' :
+                            project.status === 'in-progress' ? 'font-bold text-blue-400' :
+                            project.status === 'pending' ? ' font-bold text-yellow-500' : 'font-bold text-purple-800'
+                        } text-white px-3 rounded-full`}>
+                        <i className={`fas ${
+                            project.status === 'completed' ? 'fa-check-circle' :
+                            project.status === 'cancelled' ? 'fa-ban' :
+                            project.status === 'in-progress' ? 'fa-hourglass-half' : 'fa-question-circle'
+                        }`}></i>
+                        {project.status}
+                    </span>
+                  </td>
                   <td className="px-6 py-3 whitespace-nowrap text-sm text-gray-500">{project.priority}</td>
                   <td className="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
                     <div className="relative pt-1">
@@ -286,23 +298,27 @@ const Index = ({ projects }) => {
                   <td className="px-6 py-3 whitespace-nowrap text-sm text-gray-500">{project.user.name}</td>
                   <td className="px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
                     <div className="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
+                      {auth.is_superuser &&  
                       <Link  href={`/projects/${project.id}/edit`}
-                        className="inline-block rounded-md px-4 py-1 text-sm text-gray-500 hover:text-gray-700 focus:relative"
+                        className="inline-block rounded-md px-2  text-sm text-gray-500 hover:text-gray-700 focus:relative"
                       >
                         <i className="fas fa-edit"></i>
                       </Link>
+                      }
 
                       <button onClick={() => handleProjectInfoClick(project)}
-                        className="inline-block rounded-md px-4 py-1 text-sm text-gray-500 hover:text-gray-700 focus:relative"
+                        className="inline-block rounded-md px-2 text-sm text-gray-500 hover:text-gray-700 focus:relative"
                       >
-                        <i className="fas fa-eye mr-2"></i>
+                        <i className="fas fa-eye"></i>
                       </button>
 
+                      {auth.is_superuser &&  
                       <button onClick={() => handleDeleteClick(project.id)}
-                        className="inline-block rounded-md bg-white px-4 py-1 text-sm text-blue-500 shadow-sm focus:relative"
+                        className="inline-block rounded-md bg-white px-2 text-sm text-blue-500 shadow-sm focus:relative"
                       >
                         <i className="fas fa-trash-alt"></i> Delete
                       </button>
+                      }
                     </div>
                   </td>
                 </tr>

@@ -53,17 +53,15 @@ class Assignment extends Model
     {
         return $this->belongsTo(Tache::class, 'task_id');
     }
+    
 
-    public function markAsCompleted()
-    {
-        $this->status = 'completed';
-        $this->save();
-        $this->checkAndUpdateTaskStatus($this->task);
-
-        return true;
-    }
-
-    private function checkAndUpdateTaskStatus($task)
+    /**
+     * Check and update the status of the task.
+     *
+     * @param \App\Models\Tache $task
+     * @return void
+     */
+    public function checkAndUpdateTaskStatus($task)
     {
         $completedAssignmentsCount = Assignment::where('task_id', $task->id)
             ->where('status', 'completed')
@@ -73,6 +71,10 @@ class Assignment extends Model
 
         if ($completedAssignmentsCount === $totalAssignmentsCount) {
             $task->update(['status' => 'completed']);
+        } elseif ($completedAssignmentsCount > 0) {
+            $task->update(['status' => 'in-progress']);
+        } else {
+            $task->update(['status' => 'pending']);
         }
     }
 

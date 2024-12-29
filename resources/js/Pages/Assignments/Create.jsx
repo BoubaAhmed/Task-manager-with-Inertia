@@ -1,12 +1,35 @@
-import React, { useState } from 'react';
-import { Head, useForm } from '@inertiajs/react';
+import React, { useEffect, useState } from 'react';
+import { Head, useForm, usePage } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
-const Create = ({ users, tasks }) => {
+const Create = ({ users, tasks, projects }) => {
   const { data, setData, post, errors } = useForm({
     user_id: '',
     task_id: '',
+    project_id: '',
   });
+  const { flash} = usePage().props; 
+  const [message, setMessage] = useState({ success: null, error: null });
+
+  useEffect(() => {
+      if (flash.success) {
+      setMessage({ success: flash.success, error: null });
+      } else if (flash.error) {
+      setMessage({ success: null, error: flash.error });
+      }
+  }, [flash]);
+
+  const [filteredTasks, setFilteredTasks] = useState([]);
+
+  const handleProjectChange = (e) => {
+    const projectId = e.target.value;
+    setData('project_id', projectId);
+
+    // Filter tasks based on the selected project
+    const tasksForProject = tasks.filter((task) => task.project_id === parseInt(projectId));
+    setFilteredTasks(tasksForProject);
+    setData('task_id', ''); // Reset the task selection
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,6 +47,30 @@ const Create = ({ users, tasks }) => {
               <i className="fas fa-tasks text-blue-500"></i> Ajouter une tâche
             </h2>
             <p className="text-gray-500 text-sm">Remplissez le formulaire ci-dessous pour attribuer une tâche à un utilisateur.</p>
+          </div>
+
+          {/* Project Selection */}
+          <div className="col-span-2">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="project_id">Projet</label>
+            <div className="relative">
+              <i className="fas fa-folder-open absolute left-3 top-2.5 text-fuchsia-400"></i>
+              <select
+                name="project_id"
+                id="project_id"
+                className="shadow appearance-none border rounded w-full py-2 text-sm px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                value={data.project_id}
+                onChange={handleProjectChange}
+                required
+              >
+                <option value="">Sélectionnez un projet</option>
+                {projects.map((project) => (
+                  <option key={project.id} value={project.id}>
+                    {project.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {errors.project_id && <div className="text-red-500 text-xs">{errors.project_id}</div>}
           </div>
 
           {/* User Selection */}
@@ -62,9 +109,10 @@ const Create = ({ users, tasks }) => {
                 value={data.task_id}
                 onChange={(e) => setData('task_id', e.target.value)}
                 required
+                disabled={!data.project_id} // Disable if no project is selected
               >
                 <option value="">Sélectionnez une tâche</option>
-                {tasks.map((task) => (
+                {filteredTasks.map((task) => (
                   <option key={task.id} value={task.id}>
                     {task.name}
                   </option>
@@ -73,6 +121,7 @@ const Create = ({ users, tasks }) => {
             </div>
             {errors.task_id && <div className="text-red-500 text-xs">{errors.task_id}</div>}
           </div>
+
           {/* Submit Button */}
           <div className="flex items-center justify-end col-span-2 gap-4">
             <button
@@ -83,6 +132,29 @@ const Create = ({ users, tasks }) => {
             </button>
           </div>
         </form>
+      </div>
+
+      <div>
+        {message.error && (
+                <div className="fixed bottom-4 left-4 w-full max-w-xs z-50">
+                        <div className="bg-red-600 text-white p-4 rounded-lg shadow-lg flex justify-between items-center opacity-100 transition-opacity duration-500 ease-in-out">
+                                <p>{flash.error}</p>
+                                <button className="text-white" onClick={() => setMessage({ ...message, error: null })}>
+                                        <i className="fas fa-times"></i>
+                                </button>
+                        </div>
+                </div>
+        )}
+        {message.success && (
+                <div className="fixed bottom-4 left-4 w-full max-w-xs z-50">
+                        <div className="bg-green-600 text-white p-4 rounded-lg shadow-lg flex justify-between items-center opacity-100 transition-opacity duration-500 ease-in-out">
+                                <p>{flash.success}</p>
+                                <button className="text-white" onClick={() => setMessage({ ...message, success: null })}>
+                                        <i className="fas fa-times"></i>
+                                </button>
+                        </div>
+                </div>
+        )}
       </div>
     </AuthenticatedLayout>
   );

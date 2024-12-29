@@ -76,7 +76,7 @@ const Index = ({ users }) => {
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="px-4 py-1 border-2 border-indigo-600 rounded text-sm shadow-xl"
                         />
-                        {auth && (
+                        {auth.is_superuser && (
                             <Link
                                 href={route('users.create')}
                                 className="group relative inline-flex items-center overflow-hidden rounded border-2 border-current px-4 py-2 text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
@@ -108,9 +108,22 @@ const Index = ({ users }) => {
         >
             <Head title="Utilisateurs" />
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-screen-xl">
-                <p className="text-md font-bold leading-tight text-gray-900 mb-2">
-                    There are {users.length} users available except admins :
-                </p>    
+                <div className="flex justify-between mb-2">
+                    <p className="text-md font-bold leading-tight text-gray-900">
+                        There are {users.length} users available except admins :
+                    </p>    
+                    <div className="flex justify-end">
+                        {Array.from({ length: Math.ceil(userList.length / itemsPerPage) }, (_, index) => (
+                            <button
+                                key={index + 1}
+                                onClick={() => handlePageChange(index + 1)}
+                                className={`px-3 py-1/2 rounded-md mx-1 ${currentPage === index + 1 ? 'bg-white text-dark' : 'bg-gray-200'}`}
+                            >
+                                {index + 1}
+                            </button>
+                        ))}
+                    </div>
+                </div>
                 <div className="overflow-x-auto rounded-lg">
                     <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-indigo-500 text-white">
@@ -138,14 +151,28 @@ const Index = ({ users }) => {
                                     <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{user.name}</td>
                                     <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{user.email}</td>
                                     <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{user.role}</td>
-                                    <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{user.status}</td>
+                                    <td className={`px-4 py-2 whitespace-nowrap text-sm text-gray-500`}>
+                                    <span className={`flex items-center gap-2 ${user.status === 'active' ? 'text-green-400 font-bold' :
+                                            user.status === 'inactive' ? 'font-bold text-blue-400' :
+                                            user.status === 'pending' ? ' font-bold text-yellow-500' : 'font-bold text-purple-800'
+                                        } text-white px-3 rounded-full`}>
+                                        <i className={`fas ${
+                                            user.status === 'active' ? 'fa-check-circle' :
+                                            user.status === 'inactive' ? 'fa-ban' :
+                                            user.status === 'pending' ? 'fa-hourglass-half' : 'fa-question-circle'
+                                        }`}></i>
+                                        {user.status}
+                                    </span>
+                                    </td>
                                     <td className="px-4 py-2 text-center whitespace-nowrap text-sm text-gray-500">
                                         <div className="inline-flex rounded-lg  p-1">
+                                            {auth.is_superuser &&  
                                             <Link href={`/users/${user.id}/edit`}
                                             className="inline-block rounded-md px-4  text-sm text-gray-500 hover:text-gray-700 focus:relative"
                                             >
                                             <i className="fas fa-edit"></i>
                                             </Link>
+                                            }
                     
                                             <Link href={`/users/${user.id}`}
                                             className="inline-block rounded-md px-4  hover:bg-green-500  text-sm text-gray-500 hover:text-gray-200 focus:relative"
@@ -153,11 +180,13 @@ const Index = ({ users }) => {
                                             <i className="fas fa-eye "></i>
                                             </Link>
                     
+                                            {auth.is_superuser &&  
                                             <button onClick={() => handleDeleteClick(user.id)}
                                             className="inline-block rounded-md px-4  text-sm text-purple-500 hover:text-red-600 shadow-sm focus:relative"
                                             >
                                             <i className="fas fa-trash-alt"></i>
                                             </button>
+                                            }
                                         </div>
                                     </td>
                                 </tr>
@@ -165,19 +194,6 @@ const Index = ({ users }) => {
                         </tbody>
                     </table>
                 </div>
-    
-                <div className="flex justify-center mt-4">
-                    {Array.from({ length: Math.ceil(userList.length / itemsPerPage) }, (_, index) => (
-                        <button
-                            key={index + 1}
-                            onClick={() => handlePageChange(index + 1)}
-                            className={`px-4 py-2 mx-1 ${currentPage === index + 1 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
-                        >
-                            {index + 1}
-                        </button>
-                    ))}
-                </div>
-                
             </div>
 
 

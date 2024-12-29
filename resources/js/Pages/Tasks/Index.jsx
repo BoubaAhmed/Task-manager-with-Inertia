@@ -240,7 +240,7 @@ return (
                                     : 'black'
                             } text-white text-xs font-bold px-3 py-1 rounded-tr-lg rounded-bl-lg`}
                         >
-                            {tache.completion_percentage} %
+                            {tache.completion_percentage.toFixed(2)} %
                         </span>
                         
 

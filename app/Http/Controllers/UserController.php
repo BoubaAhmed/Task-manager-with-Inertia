@@ -11,12 +11,12 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('ensureSuperuser')->except('index');
+        $this->middleware('ensureSuperuser')->except(['index','show']);
     }
     
     public function index()
     {
-        $users = User::where('is_superuser', false)->get();
+        $users = User::all();
         return Inertia::render('Users/Index', [
             'users' => $users,
         ]);

@@ -4,7 +4,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'; // Assuming you
 import { usePage } from '@inertiajs/react';  // To access authentication info (auth) and other props
 
 const Index = ({ assignments, users, tasks, projects }) => {
-  const { delete: deleteRequest , patch} = useForm();
+  const { delete: deleteRequest} = useForm();
   const { auth , flash} = usePage().props; // Access authentication status
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUser, setSelectedUser] = useState('');
@@ -16,7 +16,6 @@ const Index = ({ assignments, users, tasks, projects }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [assignToDelete, setAssignToDelete] = useState(null);
   const [message, setMessage] = useState({ success: null, error: null });
-  console.log(assignments)
 
   useEffect(() => {
       if (flash.success) {
@@ -76,17 +75,6 @@ const Index = ({ assignments, users, tasks, projects }) => {
   const closeAssignModal = () => {
     setShowAssignModal(false);
     setAssignToShow(null);
-  };
-
-  const markAsCompleted = (assignmentId) => {
-    patch(`/assignments/${assignmentId}/complete`, {
-      onSuccess: () => {
-        setMessage({ success: 'Assignment marked as completed!', error: null });
-      },
-      onError: (errors) => {
-        setMessage({ success: null, error: 'Failed to mark assignment as completed.' });
-      },
-    });
   };
   
   return (
@@ -216,7 +204,19 @@ const Index = ({ assignments, users, tasks, projects }) => {
                   <td className="px-6 py-3">{assignment.task.name}</td>
                   <td className="px-6 py-3">{assignment.task.priority}</td>
                   <td className="px-6 py-3">{assignment.task.status}</td>
-                  <td className="px-6 py-3">{assignment.status}</td>
+                  <td className="px-6 py-3">
+                  <span className={`flex items-center gap-2 ${assignment.status === 'completed' ? 'text-green-400 font-bold' :
+                            assignment.status === 'in-progress' ? 'font-bold text-blue-400' :
+                            assignment.status === 'pending' ? ' font-bold text-yellow-500' : 'font-bold text-purple-800'
+                        } text-white px-3 rounded-full`}>
+                        <i className={`fas ${
+                            assignment.status === 'completed' ? 'fa-check-circle' :
+                            assignment.status === 'cancelled' ? 'fa-ban' :
+                            assignment.status === 'in-progress' ? 'fa-hourglass-half' : 'fa-question-circle'
+                        }`}></i>
+                        {assignment.status}
+                    </span>
+                  </td>
                   <td className="px-6 py-3">{new Date(assignment.assigned_date).toLocaleDateString()}</td>
                   <td className="px-6 py-3">
                     <span className="inline-flex overflow-hidden rounded-md  bg-white">
@@ -240,15 +240,6 @@ const Index = ({ assignments, users, tasks, projects }) => {
                         title="Delete "
                       >
                         <i className="fas fa-trash"></i>
-                      </button>
-                    )}
-                    {assignment.status !== 'completed' && (
-                      <button
-                        onClick={() => markAsCompleted(assignment.id)}
-                        className="inline-block px-2 text-green-700 hover:bg-gray-50 focus:relative"
-                        title="Mark as Completed"
-                      >
-                        <i className="fas fa-check-circle"></i> Complete
                       </button>
                     )}
                     </span>
