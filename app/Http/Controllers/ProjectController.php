@@ -18,7 +18,7 @@ class ProjectController extends Controller
 
     public function index()
     {
-        $projects = Project::with(['user', 'tasks'])->get();
+        $projects = Project::with(['user', 'tasks'])->orderBy('created_at', 'desc')->get();
         $projects->transform(function ($project) {
             $project->completion_percentage = $project->getCompletionPercentageAttribute();
             return $project;

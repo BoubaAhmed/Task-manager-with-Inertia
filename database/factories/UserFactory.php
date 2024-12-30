@@ -2,43 +2,60 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
 class UserFactory extends Factory
 {
     /**
-     * The current password being used by the factory.
+     * Le nom du modèle associé à la factory.
+     *
+     * @var string
      */
-    protected static ?string $password;
+    protected $model = User::class;
 
     /**
-     * Define the model's default state.
+     * Définir l'état par défaut de l'utilisateur.
      *
-     * @return array<string, mixed>
+     * @return array
      */
-    public function definition(): array
+    public function definition()
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'name' => $this->faker->name(),
+            'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'password' => bcrypt('password'), // mot de passe par défaut
+            'phone_number' => $this->faker->phoneNumber(),
+            'role' => $this->faker->randomElement(['designer', 'developer', 'tester', 'manager', 'analyst']),
+            'status' => $this->faker->randomElement(['active', 'inactive', 'pending', 'suspended']),
+            'is_superuser' => $this->faker->boolean(),
         ];
     }
 
     /**
-     * Indicate that the model's email address should be unverified.
+     * Définir un utilisateur avec un rôle spécifique.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
-    public function unverified(): static
+    public function admin()
     {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
+        return $this->state([
+            'role' => 'developer',
+            'is_superuser' => false,
+        ]);
+    }
+
+    /**
+     * Définir un utilisateur inactif.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function inactive()
+    {
+        return $this->state([
+            'status' => 'inactive',
         ]);
     }
 }

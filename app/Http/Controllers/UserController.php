@@ -11,12 +11,12 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('ensureSuperuser')->except(['index','show']);
+        $this->middleware('ensureSuperuser')->except(['index', 'show']);
     }
-    
+
     public function index()
     {
-        $users = User::all();
+        $users = User::orderBy('created_at', 'desc')->get();
         return Inertia::render('Users/Index', [
             'users' => $users,
         ]);
@@ -33,8 +33,8 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
-            'phone_number' => 'nullable|string|max:15', 
-            'role' => 'required|string|in:designer,developer,tester,manager,analyst', 
+            'phone_number' => 'nullable|string|max:15',
+            'role' => 'required|string|in:designer,developer,tester,manager,analyst',
             'status' => 'required|string|in:active,inactive,pending,suspended',
             'is_superuser' => 'required|boolean',
         ]);
@@ -49,7 +49,7 @@ class UserController extends Controller
         ]);
         return redirect()->route('users.index')->with('message', 'User created successfully!');
     }
-    
+
     public function show($id)
     {
         $user = User::with(['projects', 'tasks'])->findOrFail($id);
@@ -62,12 +62,12 @@ class UserController extends Controller
                 'role' => $user->role,
                 'status' => $user->status,
                 'is_superuser' => $user->is_superuser,
-                'projects' => $user->projects, 
+                'projects' => $user->projects,
                 'tasks' => $user->tasks,
             ],
         ]);
     }
-    
+
     public function edit(User $user)
     {
         return Inertia::render('Users/Edit', [
@@ -87,7 +87,7 @@ class UserController extends Controller
             'status' => 'required|string|in:active,inactive,pending,suspended', // Enum values for status
             'is_superuser' => 'required|boolean',
         ]);
-    
+
         // Update user details
         $user->update([
             'name' => $validated['name'],
@@ -97,16 +97,16 @@ class UserController extends Controller
             'status' => $validated['status'],
             'is_superuser' => $validated['is_superuser'],
         ]);
-    
+
         // Update password if provided
         if ($request->has('password') && $request->password) {
             $user->update(['password' => bcrypt($validated['password'])]);
         }
-    
+
         // Redirect back to the users index with a success message
         return redirect()->route('users.index')->with('message', 'User updated successfully!');
     }
-    
+
 
     public function destroy(User $user)
     {
@@ -114,4 +114,4 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('message', 'User deleted successfully!');
     }
-    }
+}

@@ -72,12 +72,25 @@ const Tasks = ({ tasks }) => {
                   <p className={`absolute top-0 right-0 
                       bg-${task.status==='completed' ? 'green-500' : 
                         task.status==='in-progress' ? 'indigo-500' : 
-                        task.status==='cancelled' ? 'yellow-600' :  'gray-500'
+                        task.status==='cancelled' ? 'cyan-600' :  
+                        task.status==='pending' ? 'yellow-600' : ''
                       } text-gray-100 py-1 px-2 rounded-tl-lg rounded-br-lg text-sm`}> 
                     {task.status}
                   </p>
-                  <h2 className="text-xl font-bold text-gray-800 mt-3 truncate underline"><span className="text-indigo-500 ">Project : </span>{task.task.project.name}</h2>
-                  <h2 className="text-lg font-semibold text-gray-800 mt-1 truncate">{task.task.name}</h2>
+                  <h2 className="text-xl font-bold text-gray-800 mt-3 truncate underline"><span className="text-indigo-500 ">
+                    Project :
+                    </span>
+                      {task.task.project.name && task.task.project.name.length > 15
+                              ? `${task.task.project.name.slice(0, 15)}...` 
+                              : task.task.project.name || ''
+                        }
+                  </h2>
+                  <h2 className="text-lg font-semibold text-gray-800 mt-1 truncate">
+                        {task.task.name && task.task.name.length > 15
+                              ? `${task.task.name.slice(0, 15)}...` 
+                              : task.task.name || ''
+                        }
+                  </h2> 
                   <p className="text-gray-500 mt-2 text-sm">
                     <strong>Priority:</strong> {task.task.priority}
                   </p>
@@ -110,7 +123,7 @@ const Tasks = ({ tasks }) => {
                       )}
 
                       {/* Show "Return to Progress" button only if the task is completed or cancelled */}
-                      {(task.status === "completed" || task.status === "cancelled") && (
+                      {(task.status === "completed" || task.status === "cancelled"|| task.status === "pending") && (
                         <button
                           className="px-3 py-1 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
                           onClick={() => markAsProgressing(task.id)}

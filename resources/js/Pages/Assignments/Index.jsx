@@ -39,7 +39,7 @@ const Index = ({ assignments, users, tasks, projects }) => {
     return matchesSearchQuery && matchesUser && matchesTask;
   });
 
-  const assignmentsPerPage = 10; 
+  const assignmentsPerPage = 9; 
   const totalPages = Math.ceil(filteredAssignments.length / assignmentsPerPage);
   const paginatedAssignments = filteredAssignments.slice((page - 1) * assignmentsPerPage, page * assignmentsPerPage);
 

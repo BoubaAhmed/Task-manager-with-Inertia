@@ -23,7 +23,7 @@ class TacheController extends Controller
     public function index()
     {
         (new Tache)->cancelUnassignedTasks();
-        $taches = Tache::with(['project', 'assignments.user'])->get(); 
+        $taches = Tache::with(['project', 'assignments.user'])->orderBy('created_at', 'desc')->get(); 
         
         $taches = $taches->map(function ($tache) {
             $tache->completion_percentage = $tache->getCompletionPercentageAttribute();

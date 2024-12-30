@@ -24,7 +24,7 @@ class AssignmentController extends Controller
      */
     public function index()
     {
-        $assignments = Assignment::with(['user', 'task'])->get();
+        $assignments = Assignment::with(['user', 'task'])->orderBy('created_at', 'desc')->get();
         $users = User::all();
         $tasks = Tache::all();
         $projects = Project::all();

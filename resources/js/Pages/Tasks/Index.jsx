@@ -244,8 +244,18 @@ return (
                         </span>
                         
 
-                        <p className="mt-2 font-bold text-pink-700 ">{tache.project.name}</p>
-                        <h2 className="text-lg font-semibold mb-2">{tache.name}</h2>
+                        <p className="mt-2 font-bold text-pink-700 ">      
+                                {tache.project.name && tache.project.name.length > 20
+                                ? `${tache.project.name.slice(0, 20)}...` 
+                                : tache.project.name || ''
+                                }
+                        </p>
+                        <h2 className="text-lg font-semibold mb-2">
+                                {tache.name && tache.name.length > 15
+                                ? `${tache.name.slice(0, 15)}...` 
+                                : tache.name || ''
+                                }
+                        </h2>
                         <p className="text-gray-700 text-center mb-4">
                             {tache.description && tache.description.length > 50 
                                     ? `${tache.description.slice(0, 50)}...` 

@@ -65,9 +65,7 @@ class ProfileController extends Controller
     public function tasks(Request $request): Response
     {
         $user = $request->user();
-        $tasks = Assignment::with(['task.project'])->where('user_id', $user->id)
-            ->whereNot('status', 'pending')
-            ->get();
+        $tasks = Assignment::with(['task.project'])->where('user_id', $user->id)->get();
         return Inertia::render('Profile/Tasks', [
             'tasks' => $tasks,
         ]);

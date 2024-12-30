@@ -7,7 +7,7 @@ const Index = ({ users }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [userList, setUserList] = useState(users);
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(10);
+    const [itemsPerPage] = useState(13);
     const [showModal, setShowModal] = useState(false);
     const [userToDelete, setUserToDelete] = useState(null);
 
@@ -27,6 +27,7 @@ const Index = ({ users }) => {
     }, [flash]);
 
     useEffect(() => {
+        setCurrentPage(1)
         const filteredUsers = users.filter(user =>
             user.name.toLowerCase().includes(searchQuery.toLowerCase())
         );
@@ -112,16 +113,22 @@ const Index = ({ users }) => {
                     <p className="text-md font-bold leading-tight text-gray-900">
                         There are {users.length} users available except admins :
                     </p>    
-                    <div className="flex justify-end">
-                        {Array.from({ length: Math.ceil(userList.length / itemsPerPage) }, (_, index) => (
-                            <button
-                                key={index + 1}
-                                onClick={() => handlePageChange(index + 1)}
-                                className={`px-3 py-1/2 rounded-md mx-1 ${currentPage === index + 1 ? 'bg-white text-dark' : 'bg-gray-200'}`}
-                            >
-                                {index + 1}
-                            </button>
-                        ))}
+                    <div className="flex justify-center items-center space-x-2">
+                        <button
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            disabled={currentPage === 1}
+                            className="px-3 py-1  bg-white shadow-lg rounded-md"
+                        >
+                            &lt;
+                        </button>
+                        <span className="px-2 text-sm py-1">{currentPage} / {Math.ceil(userList.length / itemsPerPage)}</span>
+                        <button
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            disabled={currentPage === Math.ceil(userList.length / itemsPerPage)}
+                            className="px-3 py-1 bg-white shadow-lg rounded-md"
+                        >
+                            &gt;
+                        </button>
                     </div>
                 </div>
                 <div className="overflow-x-auto rounded-lg">

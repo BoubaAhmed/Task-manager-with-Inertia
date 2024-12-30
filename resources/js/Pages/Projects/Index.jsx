@@ -24,7 +24,7 @@ const Index = ({ projects }) => {
   const [selectedProject, setSelectedProject] = useState(null);
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const projectsPerPage = 6;
+  const projectsPerPage = 10;
 
   // Calculate current projects
   const indexOfLastProject = currentPage * projectsPerPage;
@@ -257,7 +257,12 @@ const Index = ({ projects }) => {
             <tbody className="bg-white divide-y divide-gray-200">
               {currentProjects.map((project) => (
                 <tr key={project.id} className="hover:bg-gray-100">
-                  <td className="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">{project.name}</td>
+                  <td className="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">
+                              {project.name && project.name.length > 15
+                                    ? `${project.name.slice(0, 15)}...` 
+                                    : project.name || ''
+                              }
+                  </td>
                   <td className="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
                     <span className={`flex items-center gap-2 ${project.status === 'completed' ? 'text-green-400 font-bold' :
                             project.status === 'in-progress' ? 'font-bold text-blue-400' :
@@ -316,7 +321,7 @@ const Index = ({ projects }) => {
                       <button onClick={() => handleDeleteClick(project.id)}
                         className="inline-block rounded-md bg-white px-2 text-sm text-blue-500 shadow-sm focus:relative"
                       >
-                        <i className="fas fa-trash-alt"></i> Delete
+                        <i className="fas fa-trash-alt"></i>
                       </button>
                       }
                     </div>
