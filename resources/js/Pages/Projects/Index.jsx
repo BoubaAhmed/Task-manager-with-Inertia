@@ -262,7 +262,7 @@ const Index = ({ projects }) => {
                     <span className={`flex items-center gap-2 ${project.status === 'completed' ? 'text-green-400 font-bold' :
                             project.status === 'in-progress' ? 'font-bold text-blue-400' :
                             project.status === 'pending' ? ' font-bold text-yellow-500' : 'font-bold text-purple-800'
-                        } text-white px-3 rounded-full`}>
+                        } px-3 rounded-full`}>
                         <i className={`fas ${
                             project.status === 'completed' ? 'fa-check-circle' :
                             project.status === 'cancelled' ? 'fa-ban' :

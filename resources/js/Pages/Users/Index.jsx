@@ -152,10 +152,10 @@ const Index = ({ users }) => {
                                     <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{user.email}</td>
                                     <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{user.role}</td>
                                     <td className={`px-4 py-2 whitespace-nowrap text-sm text-gray-500`}>
-                                    <span className={`flex items-center gap-2 ${user.status === 'active' ? 'text-green-400 font-bold' :
+                                    <span className={`flex items-center gap-2  ${user.status === 'active' ? 'text-green-400 font-bold' :
                                             user.status === 'inactive' ? 'font-bold text-blue-400' :
                                             user.status === 'pending' ? ' font-bold text-yellow-500' : 'font-bold text-purple-800'
-                                        } text-white px-3 rounded-full`}>
+                                        } px-3 rounded-full`}>
                                         <i className={`fas ${
                                             user.status === 'active' ? 'fa-check-circle' :
                                             user.status === 'inactive' ? 'fa-ban' :

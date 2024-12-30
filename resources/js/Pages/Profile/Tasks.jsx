@@ -70,7 +70,7 @@ const Tasks = ({ tasks }) => {
                   className="relative p-4 bg-white hover:cursor-pointer hover:bg-slate-200 hover:shadow-lg transform hover:scale-105 transition duration-300 rounded-lg shadow hover:shadow-lg transition-shadow group"
                 >
                   <p className={`absolute top-0 right-0 
-                      bg-${task.status==='completed' ? 'lime-500' : 
+                      bg-${task.status==='completed' ? 'green-500' : 
                         task.status==='in-progress' ? 'indigo-500' : 
                         task.status==='cancelled' ? 'yellow-600' :  'gray-500'
                       } text-gray-100 py-1 px-2 rounded-tl-lg rounded-br-lg text-sm`}> 

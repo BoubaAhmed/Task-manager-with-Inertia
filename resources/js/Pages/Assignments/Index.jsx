@@ -208,7 +208,7 @@ const Index = ({ assignments, users, tasks, projects }) => {
                   <span className={`flex items-center gap-2 ${assignment.status === 'completed' ? 'text-green-400 font-bold' :
                             assignment.status === 'in-progress' ? 'font-bold text-blue-400' :
                             assignment.status === 'pending' ? ' font-bold text-yellow-500' : 'font-bold text-purple-800'
-                        } text-white px-3 rounded-full`}>
+                        } px-3 rounded-full`}>
                         <i className={`fas ${
                             assignment.status === 'completed' ? 'fa-check-circle' :
                             assignment.status === 'cancelled' ? 'fa-ban' :
