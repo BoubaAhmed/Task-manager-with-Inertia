@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'; // Assuming you have a layout file for authenticated users
-import { usePage } from '@inertiajs/react';  // To access authentication info (auth) and other props
+import { usePage } from '@inertiajs/react';  
 
 const Index = ({ assignments, users, tasks, projects }) => {
   const { delete: deleteRequest} = useForm();
-  const { auth , flash} = usePage().props; // Access authentication status
+  const { auth , flash} = usePage().props; 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUser, setSelectedUser] = useState('');
   const [selectedTask, setSelectedTask] = useState('');
@@ -32,7 +32,7 @@ const Index = ({ assignments, users, tasks, projects }) => {
 
     const filteredAssignments = assignments.filter((assignment) => {
     const matchesSearchQuery = assignment.task.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      assignment.user.name.toLowerCase().includes(searchQuery.toLowerCase());
+    assignment.user.name.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesUser = selectedUser ? assignment.user.id === parseInt(selectedUser) : true;
     const matchesTask = selectedTask ? assignment.task.id === parseInt(selectedTask) : true;
 

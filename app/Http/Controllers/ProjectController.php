@@ -65,7 +65,7 @@ class ProjectController extends Controller
 
     public function edit(Project $project)
     {
-        $users = User::all();
+        $users = User::where('is_superuser', true)->get();
         return Inertia::render('Projects/Edit', [
             'project' => $project,
             'users' => $users,

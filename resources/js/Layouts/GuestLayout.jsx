@@ -6,6 +6,11 @@ export default function GuestLayout({ children }) {
     return (
         <div className="flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:justify-center sm:pt-0">
             <div className="mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg">
+            {/* <img
+                    id="background"
+                    className="absolute -left-0 top-0 max-w-[677px]"
+                    src="https://laravel.com/assets/img/welcome/background.svg"
+                /> */}
                 <div className='flex justify-center'>
                     <ApplicationLogo imageSrc={logo} className="block h-14 w-auto my-10 text-center fill-current text-gray-800" />
                 </div>

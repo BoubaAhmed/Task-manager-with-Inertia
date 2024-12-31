@@ -66,13 +66,21 @@ class Assignment extends Model
         $completedAssignmentsCount = Assignment::where('task_id', $task->id)
             ->where('status', 'completed')
             ->count();
+        $progressingAssignmentsCount = Assignment::where('task_id', $task->id)
+            ->where('status', 'in-progress')
+            ->count();
+        $cancelledAssignmentsCount = Assignment::where('task_id', $task->id)
+            ->where('status', 'cancelled')
+            ->count();
 
         $totalAssignmentsCount = Assignment::where('task_id', $task->id)->count();
 
         if ($completedAssignmentsCount === $totalAssignmentsCount) {
             $task->update(['status' => 'completed']);
-        } elseif ($completedAssignmentsCount > 0) {
+        } elseif ($completedAssignmentsCount > 0 || $progressingAssignmentsCount > 0) {
             $task->update(['status' => 'in-progress']);
+        } elseif ($cancelledAssignmentsCount === $totalAssignmentsCount) {
+            $task->update(['status' => 'cancelled']);
         } else {
             $task->update(['status' => 'pending']);
         }

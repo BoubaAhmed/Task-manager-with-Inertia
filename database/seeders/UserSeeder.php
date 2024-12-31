@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         // Crée 10 utilisateurs de test
-        User::factory(20)->create();
+        User::factory(15)->create();
 
         // Crée un utilisateur admin spécifique
         User::factory()->admin()->create();
