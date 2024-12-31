@@ -72,10 +72,10 @@ const Index = ({ users }) => {
                     <div className="flex gap-4">
                         <input
                             type="text"
-                            placeholder="Rechercher des utilisateurs..."
+                            placeholder="Rechercher des utilisateurs..." 
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="px-4 py-1 border-2 border-indigo-600 rounded text-sm shadow-xl"
+                            className="px-4 py-2 w-80 border-2 border-indigo-600 rounded text-sm shadow-xl"
                         />
                         {auth.is_superuser && (
                             <Link

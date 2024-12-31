@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Response;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -27,11 +28,11 @@ Route::get('/', function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
-    
+
 // Route::get('/projects', function () {
 //     return Inertia::render('Test');
 // })->middleware(['auth', 'verified'])->name('projects');
- 
+
 
 
 Route::middleware('auth')->group(function () {
@@ -51,4 +52,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('users', UserController::class)->names('users');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
+Route::fallback(function () {
+    return Inertia::render('Error');
+    // return Response::view('errors.404', [], 404);
+});

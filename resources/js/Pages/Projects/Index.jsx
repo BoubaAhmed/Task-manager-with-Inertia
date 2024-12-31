@@ -1,43 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import Modal from '@/Components/Modal';
 
 const Index = ({ projects }) => {
   const { delete: deleteRequest } = useForm();
-  const { flash , auth } = usePage().props;
-  const [message, setMessage] = useState({ success: null, error: null });
-
-  useEffect(() => {
-    if (flash.success) {
-      setMessage({ success: flash.success, error: null });
-    } else if (flash.error) {
-      setMessage({ success: null, error: flash.error });
-    }
-  }, [flash]);
+  const { auth } = usePage().props;
+  const [searchQuery, setSearchQuery] = useState('');
 
   const [showModal, setShowModal] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState(null);
 
-  // State for user info modal
   const [showProjectModal, setShowProjectModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
-  // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const projectsPerPage = 10;
 
-  // Calculate current projects
   const indexOfLastProject = currentPage * projectsPerPage;
   const indexOfFirstProject = indexOfLastProject - projectsPerPage;
-  const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
+  const [currentProjects, setCurrentProjects] = useState(projects.slice(indexOfFirstProject, indexOfLastProject));
 
-  // Handle page change
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleDeleteClick = (projectId) => {
     setProjectToDelete(projectId);
     setShowModal(true);
   };
+
+      useEffect(() => {
+        setCurrentPage(1);
+        const filteredProjects = projects.filter(project =>
+          project.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setCurrentProjects(filteredProjects);
+      }, [searchQuery, projects]);
+      
 
   const handleConfirmDelete = () => {
     if (projectToDelete) {
@@ -62,28 +59,13 @@ const Index = ({ projects }) => {
           <h2 className="text-2xl font-bold leading-tight text-gray-900 flex items-center gap-2">
             <i className="fas fa-folder-open text-indigo-600"></i> Projects
           </h2>
-          <div>
-              {message.error && (
-                  <div className="fixed bottom-4 left-4 w-full max-w-xs z-50">
-                      <div className="bg-red-600 text-white p-4 rounded-lg shadow-lg flex justify-between items-center opacity-100 transition-opacity duration-500 ease-in-out">
-                          <p>{flash.error}</p>
-                          <button className="text-white" onClick={() => setMessage({ ...message, error: null })}>
-                              <i className="fas fa-times"></i>
-                          </button>
-                      </div>
-                  </div>
-              )}
-              {message.success && (
-                  <div className="fixed bottom-4 left-4 w-full max-w-xs z-50">
-                      <div className="bg-green-600 text-white p-4 rounded-lg shadow-lg flex justify-between items-center opacity-100 transition-opacity duration-500 ease-in-out">
-                          <p>{flash.success}</p>
-                          <button className="text-white" onClick={() => setMessage({ ...message, success: null })}>
-                              <i className="fas fa-times"></i>
-                          </button>
-                      </div>
-                  </div>
-              )}
-          </div>
+          <input
+              type="text"
+              placeholder="Rechercher des projets..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="px-4 py-2 w-80 border-2 border-indigo-600 rounded text-sm shadow-xl"
+          />
           {auth.is_superuser && 
           <Link
             href="/projects/create"

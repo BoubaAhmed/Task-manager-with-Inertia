@@ -76,7 +76,7 @@ class Project extends Model
      * Check if the project is in-progress.
      *
      * @return bool
-     */
+     */ 
     public function isInProgress()
     {
         return $this->status === 'in-progress';

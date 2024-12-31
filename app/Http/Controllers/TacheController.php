@@ -17,9 +17,6 @@ class TacheController extends Controller
         $this->middleware('ensureSuperuser')->except('index');
     }
 
-    /**
-     * Display a listing of tasks.
-     */
     public function index()
     {
         (new Tache)->cancelUnassignedTasks();
@@ -36,20 +33,14 @@ class TacheController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new task.
-     */
     public function create()
     {
-        $projects = Project::all(); // Get all projects to display in the dropdown
+        $projects = Project::all();
         return Inertia::render('Tasks/Create', [
             'projects' => $projects
         ]);
     }
 
-    /**
-     * Store a newly created task in storage.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -66,35 +57,20 @@ class TacheController extends Controller
         return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
     }
 
-    /**
-     * Show the form for editing the specified task.
-     */
-    // public function edit(Tache $tache)
-    // {
-    //     $projects = Project::all(); // Get all projects for the dropdown
-    //     return Inertia::render('Tasks/Edit', [
-    //         'tache' => $tache,
-    //         'projects' => $projects
-    //     ]);
-    // }
     public function edit($id)
     {
-        $tache = Tache::find($id); // Find the task by its ID
-        $projects = Project::all(); // Get all projects
+        $tache = Tache::find($id); 
+        $projects = Project::all();
 
         if (!$tache) {
             return redirect()->route('tasks.index')->with('error', 'Task not found');
         }
-
         return Inertia::render('Tasks/Edit', [
             'tache' => $tache,
             'projects' => $projects
         ]);
     }
 
-    /**
-     * Update the specified task in storage.
-     */
     public function update(Request $request, $id)
     {
         $tache = Tache::find($id);
@@ -113,9 +89,6 @@ class TacheController extends Controller
         return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
     }
 
-    /**
-     * Remove the specified task from storage.
-     */
     public function destroy($id)
     {
         $tache = Tache::find($id);

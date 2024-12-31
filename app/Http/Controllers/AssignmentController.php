@@ -15,7 +15,7 @@ class AssignmentController extends Controller
 
     public function __construct()
     {
-        $this->middleware('ensureSuperuser')->except(['index','markAsCompleted','markAsCancelled','markAsProgressing']);
+        $this->middleware('ensureSuperuser')->except(['index', 'markAsCompleted', 'markAsCancelled', 'markAsProgressing']);
     }
     /**
      * Display a listing of the resource.
@@ -70,15 +70,15 @@ class AssignmentController extends Controller
         $task = Tache::find($request->task_id);
 
         if ($task->isCompleted()) {
-            return redirect()->route('assignments.create')->with('error', 'Cannot assign user to a completed task.');
+            return redirect()->route('assignments.create')->with('error', 'Impossible d\'assigner un utilisateur à une tâche terminée.');
         }
 
         if (Assignment::isUserAssignedToSameTaskInProject(new Assignment($request->all()))) {
-            return redirect()->route('assignments.create')->with('error', 'User is already assigned to this task in the project.');
+            return redirect()->route('assignments.create')->with('error', 'Ce membre est déjà assigné à cette tâche dans le projet.');
         }
 
-        $project = $task->project;  
-        
+        $project = $task->project;
+
         if ($project->status !== 'in-progress') {
             $project->update(['status' => 'in-progress']);
         }
@@ -134,15 +134,29 @@ class AssignmentController extends Controller
     {
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
-            'task_id' => 'required|exists:taches,id', 
-            'status' => 'required|in:pending,in-progress,completed,cancelled', 
+            'task_id' => 'required|exists:taches,id',
+            'status' => 'required|in:pending,in-progress,completed,cancelled',
             'assigned_date' => 'required|date',
         ]);
-    
+
+        $task = Tache::find($request->task_id);
+        if ($task->isCompleted()) {
+            return redirect()->back()->with('error', 'Impossible d\'assigner un utilisateur à une tâche terminée.');
+        }
+        if (Assignment::isUserAssignedToSameTaskInProject(new Assignment($request->all()))) {
+            return redirect()->back()->with('error', 'Ce membre est déjà assigné à cette tâche dans le projet.');
+        }
+        $project = $task->project;
+        if ($project->status !== 'in-progress') {
+            $project->update(['status' => 'in-progress']);
+        } 
+        if ($task->status !== 'in-progress') {
+            $task->update(['status' => 'in-progress']);
+        }
         $assignment->update($validated);
         return redirect()->route('assignments.index');
     }
-    
+
     /**
      * Remove the specified resource from storage.
      *
@@ -156,34 +170,28 @@ class AssignmentController extends Controller
         return redirect()->route('assignments.index');
     }
 
+    private function updateAssignmentStatus(Request $request, Assignment $assignment, $status, $message)
+    {
+        if ($assignment->user_id !== $request->user()->id) {
+            return redirect()->back()->with('error', "Vous n'avez pas la permission de mettre cette tache $status.");
+        }
+        $assignment->update(['status' => $status]);
+        $assignment->checkAndUpdateTaskStatus($assignment->task);
+        return redirect()->back()->with('success', "Assignment marked as $message");
+    }
+
     public function markAsCompleted(Request $request, Assignment $assignment)
     {
-        if ($assignment->user_id !== $request->user()->id) {
-            return redirect()->back()->with('error', 'Vous n\'avez pas la permission de mettre cette tache complete.');
-        }
-        $assignment->update(['status' => 'completed']);
-        $assignment->checkAndUpdateTaskStatus($assignment->task);
-        return redirect()->back()->with('success', 'Assignment marked as completed');
+        return $this->updateAssignmentStatus($request, $assignment, 'completed', 'Completed');
     }
-    
+
     public function markAsCancelled(Request $request, Assignment $assignment)
     {
-        if ($assignment->user_id !== $request->user()->id) {
-            return redirect()->back()->with('error', 'Vous n\'avez pas la permission de mettre cette tache cancelled.');
-        }
-        $assignment->update(['status' => 'cancelled']);
-        $assignment->checkAndUpdateTaskStatus($assignment->task);
-        return redirect()->back()->with('success', 'Assignment marked as Cancelled');
+        return $this->updateAssignmentStatus($request, $assignment, 'cancelled', 'Cancelled');
     }
 
     public function markAsProgressing(Request $request, Assignment $assignment)
     {
-        if ($assignment->user_id !== $request->user()->id) {
-            return redirect()->back()->with('error', 'Vous n\'avez pas la permission de mettre cette tache progress.');
-        }
-        $assignment->update(['status' => 'in-progress']);
-        $assignment->checkAndUpdateTaskStatus($assignment->task);
-        return redirect()->back()->with('success', 'Assignment marked as Progressing');
+        return $this->updateAssignmentStatus($request, $assignment, 'in-progress', 'Progressing');
     }
-
 }

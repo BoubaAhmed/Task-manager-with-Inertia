@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Head, useForm, usePage } from '@inertiajs/react';
+import React, { useState } from 'react';
+import { Head, useForm } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import Messages from '@/Components/Messages';
 
 const Create = ({ users, tasks, projects }) => {
   const { data, setData, post, errors } = useForm({
@@ -8,27 +9,15 @@ const Create = ({ users, tasks, projects }) => {
     task_id: '',
     project_id: '',
   });
-  const { flash} = usePage().props; 
-  const [message, setMessage] = useState({ success: null, error: null });
-
-  useEffect(() => {
-      if (flash.success) {
-      setMessage({ success: flash.success, error: null });
-      } else if (flash.error) {
-      setMessage({ success: null, error: flash.error });
-      }
-  }, [flash]);
 
   const [filteredTasks, setFilteredTasks] = useState([]);
 
   const handleProjectChange = (e) => {
     const projectId = e.target.value;
     setData('project_id', projectId);
-
-    // Filter tasks based on the selected project
     const tasksForProject = tasks.filter((task) => task.project_id === parseInt(projectId));
     setFilteredTasks(tasksForProject);
-    setData('task_id', ''); // Reset the task selection
+    setData('task_id', ''); 
   };
 
   const handleSubmit = (e) => {
@@ -39,7 +28,7 @@ const Create = ({ users, tasks, projects }) => {
   return (
     <AuthenticatedLayout>
       <Head title="Create Assignment" />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-screen-sm">
+      <div className="container mx-auto px-4 mt-20 sm:px-6 lg:px-8 py-8 max-w-screen-sm">
         <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-5 pb-3 grid grid-cols-1 sm:grid-cols-2 gap-6">
           {/* Form Title */}
           <div className="col-span-2 text-center">
@@ -134,28 +123,7 @@ const Create = ({ users, tasks, projects }) => {
         </form>
       </div>
 
-      <div>
-        {message.error && (
-                <div className="fixed bottom-4 left-4 w-full max-w-xs z-50">
-                        <div className="bg-red-600 text-white p-4 rounded-lg shadow-lg flex justify-between items-center opacity-100 transition-opacity duration-500 ease-in-out">
-                                <p>{flash.error}</p>
-                                <button className="text-white" onClick={() => setMessage({ ...message, error: null })}>
-                                        <i className="fas fa-times"></i>
-                                </button>
-                        </div>
-                </div>
-        )}
-        {message.success && (
-                <div className="fixed bottom-4 left-4 w-full max-w-xs z-50">
-                        <div className="bg-green-600 text-white p-4 rounded-lg shadow-lg flex justify-between items-center opacity-100 transition-opacity duration-500 ease-in-out">
-                                <p>{flash.success}</p>
-                                <button className="text-white" onClick={() => setMessage({ ...message, success: null })}>
-                                        <i className="fas fa-times"></i>
-                                </button>
-                        </div>
-                </div>
-        )}
-      </div>
+      <Messages/>
     </AuthenticatedLayout>
   );
 };

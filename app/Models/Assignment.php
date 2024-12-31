@@ -56,7 +56,7 @@ class Assignment extends Model
     
 
     /**
-     * Check and update the status of the task.
+     * Check and update the status of the task. 
      *
      * @param \App\Models\Tache $task
      * @return void

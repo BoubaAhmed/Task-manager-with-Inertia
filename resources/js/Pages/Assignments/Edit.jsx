@@ -1,8 +1,10 @@
 import React from 'react';
 import { Head, useForm } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import Messages from '@/Components/Messages';
 
 const Edit = ({ assignment, users, tasks }) => {
+
   const { data, setData, put, errors } = useForm({
     user_id: assignment.user_id,
     task_id: assignment.task_id,
@@ -18,7 +20,7 @@ const Edit = ({ assignment, users, tasks }) => {
   return (
     <AuthenticatedLayout>
       <Head title="Edit Assignment" />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-screen-sm">
+      <div className="container mx-auto mt-20  px-4 sm:px-6 lg:px-8 py-8 max-w-screen-sm">
         <form
           onSubmit={handleSubmit}
           className="bg-white shadow-md rounded px-8 pt-5 pb-3 grid grid-cols-1 sm:grid-cols-2 gap-6"
@@ -129,6 +131,7 @@ const Edit = ({ assignment, users, tasks }) => {
           </div>
         </form>
       </div>
+      <Messages />
     </AuthenticatedLayout>
   );
 };

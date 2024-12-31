@@ -21,7 +21,7 @@ const Create = ({ projects }) => {
   return (
     <AuthenticatedLayout>
       <Head title="Créer une tâche" />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-screen-sm">
+      <div className="container mx-auto px-4 mt-10 sm:px-6 lg:px-8 py-8 max-w-screen-sm">
         <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-5 pb-3 grid grid-cols-1 sm:grid-cols-2 gap-6">
           {/* Titre du formulaire */}
           <div className="col-span-2 text-center">

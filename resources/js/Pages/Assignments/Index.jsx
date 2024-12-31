@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'; // Assuming you have a layout file for authenticated users
 import { usePage } from '@inertiajs/react';  
+import Messages from '@/Components/Messages';
 
 const Index = ({ assignments, users, tasks, projects }) => {
   const { delete: deleteRequest} = useForm();
@@ -15,15 +16,6 @@ const Index = ({ assignments, users, tasks, projects }) => {
   const [assignToShow, setAssignToShow] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [assignToDelete, setAssignToDelete] = useState(null);
-  const [message, setMessage] = useState({ success: null, error: null });
-
-  useEffect(() => {
-      if (flash.success) {
-      setMessage({ success: flash.success, error: null });
-      } else if (flash.error) {
-      setMessage({ success: null, error: flash.error });
-      }
-  }, [flash]);
 
   const filteredTasks = selectedProject
     ? tasks.filter(task => task.project_id === parseInt(selectedProject))
@@ -82,7 +74,7 @@ const Index = ({ assignments, users, tasks, projects }) => {
       header={
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-bold leading-tight text-gray-900 flex items-center gap-2">
-            <i className="fas fa-tasks text-indigo-600"></i> Assignments :
+            <i className="fas fa-tasks text-indigo-600"></i> Assignations :
           </h2>
           <div className="flex gap-4">
             <select
@@ -151,11 +143,11 @@ const Index = ({ assignments, users, tasks, projects }) => {
         </div>
       }
     >
-      <Head title="Assignments" />
+      <Head title="Assignations" />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-screen-xl">
         <div className="flex mb-3 justify-between gap-4">
             <p className="text-md font-bold leading-tight text-gray-900">
-              There are {assignments.length} assignments available:
+              Il y a {assignments.length} assignations disponibles :
             </p>
             <input
               type="text"
@@ -170,25 +162,25 @@ const Index = ({ assignments, users, tasks, projects }) => {
             <thead className="bg-sky-600 text-gray-100">
               <tr>
                 <th className="px-6 py-3 text-left uppercase text-sm font-medium ">
-                  <i className="fas fa-user text-rose-400 mr-2"></i>User
+                  <i className="fas fa-user text-rose-400 mr-2"></i>Utilisateur
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-medium ">
-                  <i className="fas fa-user-tag text-orange-500 mr-2"></i>User Role
+                  <i className="fas fa-user-tag text-orange-500 mr-2"></i>Rôle
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-medium "> 
+                  <i className="fas fa-tasks text-yellow-400 mr-2"></i>Tâche
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-medium ">
-                  <i className="fas fa-tasks text-yellow-400 mr-2"></i>Task
+                  <i className="fas fa-exclamation-circle text-green-500 mr-2"></i>Priorité
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-medium ">
-                  <i className="fas fa-exclamation-circle text-green-500 mr-2"></i>Priority
+                  <i className="fas fa-flag text-rose-400 mr-2"></i>Statut de la tâche
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-medium ">
-                  <i className="fas fa-flag text-rose-400 mr-2"></i>Task Status
+                  <i className="fas fa-flag text-rose-400 mr-2"></i>Statut
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-medium ">
-                  <i className="fas fa-flag text-rose-400 mr-2"></i>Assign Status
-                </th>
-                <th className="px-6 py-3 text-left text-sm font-medium ">
-                  <i className="fas fa-calendar-alt text-sky-300 mr-2"></i>Assigned Date
+                  <i className="fas fa-calendar-alt text-sky-300 mr-2"></i>Date d'assignation
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-medium ">
                   <i className="fas fa-tools text-lime-300 mr-2"></i>Actions
@@ -223,21 +215,21 @@ const Index = ({ assignments, users, tasks, projects }) => {
                     {auth.is_superuser && ( 
                       <Link href={route('assignments.edit', assignment.id)}
                         className="inline-block p-2 text-purple-700 hover:bg-gray-50 focus:relative"
-                        title="Edit "
+                        title="Modifier "
                       >
                         <i className="fas fa-edit"></i>
                       </Link>
                     )}
                       <button  onClick={() => openAssignModal(assignment)}
                         className="inline-block  px-2 text-blue-700 hover:bg-gray-50 focus:relative"
-                        title="View "
+                        title="Voir "
                       >
                         <i className="fas fa-eye"></i>
                       </button>
                     {auth.is_superuser && (
                       <button onClick={() => openDeleteModal(assignment.id)}
                         className="inline-block px-2 text-pink-700 hover:bg-gray-50 focus:relative"
-                        title="Delete "
+                        title="Supprimer "
                       >
                         <i className="fas fa-trash"></i>
                       </button>
@@ -258,7 +250,7 @@ const Index = ({ assignments, users, tasks, projects }) => {
             disabled={page === 1}
             className="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180"
           >
-            <span className="sr-only">Prev Page</span>
+            <span className="sr-only">Page précédente</span>
             <svg xmlns="http://www.w3.org/2000/svg" className="size-3" viewBox="0 0 20 20" fill="currentColor">
               <path
                 fillRule="evenodd"
@@ -269,7 +261,7 @@ const Index = ({ assignments, users, tasks, projects }) => {
           </a>
           <p className="text-xs text-gray-900">
              {page}  
-            <span className="mx-0.25 px-2">of</span>
+            <span className="mx-0.25 px-2">de</span>
             {totalPages}
           </p>
 
@@ -279,7 +271,7 @@ const Index = ({ assignments, users, tasks, projects }) => {
             href="#"
             className="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180"
           >
-            <span className="sr-only">Next Page</span>
+            <span className="sr-only">Page suivante</span>
             <svg xmlns="http://www.w3.org/2000/svg" className="size-3" viewBox="0 0 20 20" fill="currentColor">
               <path
                 fillRule="evenodd"
@@ -296,26 +288,25 @@ const Index = ({ assignments, users, tasks, projects }) => {
       {showAssignModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-4 rounded-lg shadow-xl max-w-lg w-full transform transition-all duration-300 ease-in-out scale-100 hover:scale-105">
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">Détails de l'Assignment</h3>
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">Détails de l'Assignation</h3>
 
-            {/* Compact Assignment Details */}
+            {/* Détails compacts de l'assignation */}
             <div className="text-sm text-gray-700">
-              <p><strong>Assigned Date:</strong> {new Date(assignToShow.assigned_date).toLocaleDateString()}</p>
-              <p><strong>Created At:</strong> {new Date(assignToShow.created_at).toLocaleDateString()}</p>
-              <p><strong>Updated At:</strong> {new Date(assignToShow.updated_at).toLocaleDateString()}</p>
+              <p><strong>Date d'assignation :</strong> {new Date(assignToShow.assigned_date).toLocaleDateString()}</p>
+              <p><strong>Créé le :</strong> {new Date(assignToShow.created_at).toLocaleDateString()}</p>
+              <p><strong>Mis à jour le :</strong> {new Date(assignToShow.updated_at).toLocaleDateString()}</p>
             </div>
 
-            {/* Compact Task Details */}
             <div className="mt-3 text-sm text-gray-700">
-              <p><strong>Task Name:</strong> {assignToShow.task.name}</p>
-              <p><strong>Description:</strong> {assignToShow.task.description}</p>
-              <p><strong>Priority:</strong> {assignToShow.task.priority}</p>
-              <p><strong>Status:</strong> {assignToShow.task.status}</p>
+              <p><strong>Nom de la tâche :</strong> {assignToShow.task.name}</p>
+              <p><strong>Description :</strong> {assignToShow.task.description}</p>
+              <p><strong>Priorité :</strong> {assignToShow.task.priority}</p>
+              <p><strong>Statut :</strong> {assignToShow.task.status}</p>
             </div>
 
             <div className="mt-3">
               <table className="table-auto w-full text-sm text-gray-700">
-                <strong>User :</strong>
+                <strong>Utilisateur :</strong>
                 <tbody>
                     <tr className="border-b">
                       <td className="px-2 py-1">{assignToShow.user.name}</td>
@@ -357,29 +348,7 @@ const Index = ({ assignments, users, tasks, projects }) => {
               </div>
           </div>
       )}
-      <div>
-        {message.error && (
-                <div className="fixed bottom-4 left-4 w-full max-w-xs z-50">
-                        <div className="bg-red-600 text-white p-4 rounded-lg shadow-lg flex justify-between items-center opacity-100 transition-opacity duration-500 ease-in-out">
-                                <p>{flash.error}</p>
-                                <button className="text-white" onClick={() => setMessage({ ...message, error: null })}>
-                                        <i className="fas fa-times"></i>
-                                </button>
-                        </div>
-                </div>
-        )}
-        {message.success && (
-                <div className="fixed bottom-4 left-4 w-full max-w-xs z-50">
-                        <div className="bg-green-600 text-white p-4 rounded-lg shadow-lg flex justify-between items-center opacity-100 transition-opacity duration-500 ease-in-out">
-                                <p>{flash.success}</p>
-                                <button className="text-white" onClick={() => setMessage({ ...message, success: null })}>
-                                        <i className="fas fa-times"></i>
-                                </button>
-                        </div>
-                </div>
-        )}
-      </div>
-
+     <Messages/>
     </AuthenticatedLayout>
   );
 };

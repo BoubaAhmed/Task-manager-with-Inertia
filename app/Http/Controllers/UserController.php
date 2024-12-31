@@ -22,7 +22,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function create()
+    public function create() 
     {
         return Inertia::render('Users/Create');
     }
@@ -77,33 +77,29 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        // Validate the input data
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
-            'phone_number' => 'nullable|string|max:15', // Optional phone number field
-            'role' => 'required|string|in:designer,developer,tester,manager,analyst', // Enum values for role
-            'status' => 'required|string|in:active,inactive,pending,suspended', // Enum values for status
+            'phone_number' => 'nullable|string|max:15', 
+            'role' => 'required|string|in:designer,developer,tester,manager,analyst', 
+            'status' => 'required|string|in:active,inactive,pending,suspended', 
             'is_superuser' => 'required|boolean',
         ]);
 
-        // Update user details
         $user->update([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'phone_number' => $validated['phone_number'] ?? $user->phone_number, // Only update if provided
+            'phone_number' => $validated['phone_number'] ?? $user->phone_number, 
             'role' => $validated['role'],
             'status' => $validated['status'],
             'is_superuser' => $validated['is_superuser'],
         ]);
 
-        // Update password if provided
         if ($request->has('password') && $request->password) {
             $user->update(['password' => bcrypt($validated['password'])]);
         }
 
-        // Redirect back to the users index with a success message
         return redirect()->route('users.index')->with('message', 'User updated successfully!');
     }
 
