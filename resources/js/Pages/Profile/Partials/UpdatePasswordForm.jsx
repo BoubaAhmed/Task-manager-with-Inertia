@@ -47,17 +47,29 @@ export default function UpdatePasswordForm({ className = '' }) {
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">
-                    Update Password
+                <h2 className="text-lg font-medium text-gray-900 flex items-center space-x-2">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="w-6 h-6 text-gray-600"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M16.5 10.5V6.75a4.5 4.5 0 00-9 0V10.5M19.5 10.5h-15M7.5 10.5v7.5m9-7.5v7.5m-9 0h9"
+                        />
+                    </svg>
+                    <span>Mettre à jour le mot de passe</span>
                 </h2>
-
                 <p className="mt-1 text-sm text-gray-600">
-                    Ensure your account is using a long, random password to stay
-                    secure.
+                    Assurez-vous que votre compte utilise un mot de passe long  pour rester sécurisé.
                 </p>
             </header>
 
-            <form onSubmit={updatePassword} className="mt-6 space-y-6">
+            <form onSubmit={updatePassword} className="mt-6  bg-white p-6 rounded shadow-lg  space-y-6">
                 <div>
                     <InputLabel
                         htmlFor="current_password"
@@ -122,7 +134,23 @@ export default function UpdatePasswordForm({ className = '' }) {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+                    <PrimaryButton disabled={processing}>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            className="w-5 h-5"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M5 13l4 4L19 7"
+                            />
+                        </svg>
+                        <span>Save</span>
+                    </PrimaryButton>
 
                     <Transition
                         show={recentlySuccessful}
@@ -131,7 +159,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                         leave="transition ease-in-out"
                         leaveTo="opacity-0"
                     >
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-green-500">
                             Saved.
                         </p>
                     </Transition>

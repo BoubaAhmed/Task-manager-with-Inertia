@@ -95,7 +95,7 @@ export default function Dashboard({
 
     return (
         <AuthenticatedLayout
-            header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Dashboard Overview</h2>}
+            header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Tableau de bord</h2>}
         >
             <Head title="Dashboard" />
 
@@ -104,7 +104,7 @@ export default function Dashboard({
                     <div className="overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-                                <StatCard title="Tasks Overview">
+                                <StatCard title="Aperçu des tâches">
                                     <Bar 
                                         data={tasksBarChartData} 
                                         options={{
@@ -119,7 +119,7 @@ export default function Dashboard({
                                         }} 
                                     />
                                 </StatCard>
-                                <StatCard title="Tasks Over Time">
+                                <StatCard title="Tâches au fil du temps">
                                     <Line
                                         data={tasksOverTimeData}
                                         options={{
@@ -149,13 +149,13 @@ export default function Dashboard({
                                         }}
                                     />
                                 </StatCard>
-                                <StatCard title="Projects Over Time">
+                                <StatCard title="Projets au fil du temps">
                                     <Line data={projectsOverTimeData} />
                                 </StatCard>
                             </div>
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-                            <StatCard title="Projects by Status">
+                            <StatCard title="Projets par statut">
                                 <div style={{ margin: '0 auto' , width:'70%' }} className=''>
                                 <Doughnut
                                     data={projectsStatusData} 
@@ -170,7 +170,7 @@ export default function Dashboard({
                                 />
                                 </div>
                             </StatCard>
-                                <StatCard title="Tasks Status Breakdown">
+                                <StatCard title="Répartition du statut des tâches">
                                 <div style={{ margin: '0 auto' , width:'70%' }} className=''>
                                     <Doughnut
                                         data={tasksStatusData} 

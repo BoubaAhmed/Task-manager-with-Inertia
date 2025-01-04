@@ -5,6 +5,8 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
+import Messages from '@/Components/Messages';
+import React from 'react';
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -33,7 +35,7 @@ export default function Login({ status, canResetPassword }) {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="email" value="Email " />
+                    <InputLabel htmlFor="email" value="Email " /> 
                     <TextInput
                         id="email"
                         type="email"
@@ -45,6 +47,12 @@ export default function Login({ status, canResetPassword }) {
                         placeholder="Entrez votre email"
                         onChange={(e) => setData('email', e.target.value)}
                     />
+                    <span
+                        className="ml-1 text-gray-400 text-xs italic"
+                        title="Enter the user's full name"
+                    >
+                        (e.g., ahmedbouba383@gmail.com)
+                    </span>
                     <InputError message={errors.email} className="mt-2" />
                 </div>
 
@@ -95,6 +103,7 @@ export default function Login({ status, canResetPassword }) {
                     </PrimaryButton>
                 </div>
             </form>
+            <Messages/>
         </GuestLayout>
     );
 }

@@ -143,8 +143,10 @@ class AssignmentController extends Controller
         if ($task->isCompleted()) {
             return redirect()->back()->with('error', 'Impossible d\'assigner un utilisateur à une tâche terminée.');
         }
-        if (Assignment::isUserAssignedToSameTaskInProject(new Assignment($request->all()))) {
-            return redirect()->back()->with('error', 'Ce membre est déjà assigné à cette tâche dans le projet.');
+        if ($assignment->user_id != $request->user_id) {
+            if (Assignment::isUserAssignedToSameTaskInProject(new Assignment($request->all()))) {
+                return redirect()->back()->with('error', 'Ce membre est déjà assigné à cette tâche dans le projet.');
+            }
         }
         $project = $task->project;
         if ($project->status !== 'in-progress') {

@@ -29,31 +29,31 @@ export default function AuthenticatedLayout({ header, children }) {
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
                                 >
-                                    <i className="fas fa-tachometer-alt" style={{ marginRight: '8px' }}></i> Dashboard
+                                    <i className="fas fa-tachometer-alt" style={{ marginRight: '8px' }}></i> Tableau de bord
                                 </NavLink>
                                 <NavLink
                                     href={route('users.index')}
                                     active={route().current('users.index')}
                                 >
-                                    <i className="fas fa-users" style={{ marginRight: '8px' }}></i> Users
+                                    <i className="fas fa-users" style={{ marginRight: '8px' }}></i> Utilisateurs
                                 </NavLink>
                                 <NavLink
                                     href={route('projects.index')}
                                     active={route().current('projects.index')}
                                 >
-                                    <i className="fas fa-folder" style={{ marginRight: '8px' }}></i> Projects
+                                    <i className="fas fa-folder" style={{ marginRight: '8px' }}></i> Projets
                                 </NavLink>
                                 <NavLink
                                     href={route('tasks.index')}
                                     active={route().current('tasks.index')}
                                 >
-                                    <i className="fas fa-tasks" style={{ marginRight: '8px' }}></i> Taches
+                                    <i className="fas fa-tasks" style={{ marginRight: '8px' }}></i> Tâches
                                 </NavLink>
                                 <NavLink
                                     href={route('assignments.index')}
                                     active={route().current('assignments.index')}
                                 >
-                                    <i className="fas fa-user-check" style={{ marginRight: '8px' }}></i> Assignments
+                                    <i className="fas fa-user-check" style={{ marginRight: '8px' }}></i> Affectations
                                 </NavLink>
                             </div>
                         </div>

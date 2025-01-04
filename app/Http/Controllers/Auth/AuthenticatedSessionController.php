@@ -29,6 +29,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        $user = \App\Models\User::where('email', $request->email)->first();
+        $status = $user->status;
+
+        if ($user && ($status === 'pending' || $status === 'suspended')) {
+            return redirect()->route('login')->with('error', "Your account is $status.");
+        }
+
         $request->authenticate();
 
         $request->session()->regenerate();
