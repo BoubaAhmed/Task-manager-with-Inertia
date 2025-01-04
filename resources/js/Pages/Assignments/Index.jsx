@@ -170,9 +170,9 @@ const Index = ({ assignments, users, tasks, projects }) => {
                 <th className="px-6 py-3 text-left text-sm font-medium "> 
                   <i className="fas fa-tasks text-yellow-400 mr-2"></i>Tâche
                 </th>
-                <th className="px-6 py-3 text-left text-sm font-medium ">
+                {/* <th className="px-6 py-3 text-left text-sm font-medium ">
                   <i className="fas fa-exclamation-circle text-green-500 mr-2"></i>Priorité
-                </th>
+                </th> */}
                 <th className="px-6 py-3 text-left text-sm font-medium ">
                   <i className="fas fa-flag text-rose-400 mr-2"></i>Statut de la tâche
                 </th>
@@ -194,7 +194,7 @@ const Index = ({ assignments, users, tasks, projects }) => {
                   <td className="px-6 py-3">{assignment.user.name}</td>
                   <td className="px-6 py-3">{assignment.user.role}</td>
                   <td className="px-6 py-3">{assignment.task.name}</td>
-                  <td className="px-6 py-3">{assignment.task.priority}</td>
+                  {/* <td className="px-6 py-3">{assignment.task.priority}</td> */}
                   <td className="px-6 py-3">{assignment.task.status}</td>
                   <td className="px-6 py-3">
                   <span className={`flex items-center gap-2 ${assignment.status === 'completed' ? 'text-green-400 font-bold' :

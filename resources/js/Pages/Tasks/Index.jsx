@@ -178,7 +178,7 @@ return (
             <div className="inline-flex rounded w-full items-center justify-between gap-3 mt-4">
                     <div>
                     <p className="text-md font-bold leading-tight text-gray-900">
-                        Il y a {taches.length} tâches disponibles :
+                        Il y a {currentTaches.length} tâches disponibles :
                     </p>
                     </div>
                     <div className='inline-flex rounded items-center'>
@@ -217,83 +217,104 @@ return (
                             </a>
                     </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
-                {currentTaches?.map((tache) => (
-                    <div key={tache.id} className="relative bg-white p-6 rounded-lg shadow-md hover:cursor-pointer hover:bg-slate-200 transition hover:scale-110 hover:shadow-xl group">
-                        <span
-                            className={`absolute top-0 left-0 bg-${
-                                tache.status === 'completed'
-                                    ? 'green-500'
-                                    : tache.status === 'in-progress'
-                                    ? 'blue-600'
-                                    : 'black'
-                            } text-white text-xs font-bold px-3 py-1 rounded-tr-lg rounded-bl-lg`}
-                        >
-                            {tache.status}
-                        </span>
-                        <span
-                            className={`absolute top-0 right-0 bg-${
-                                tache.completion_percentage === '100'
-                                    ? 'green-500'
-                                    : tache.completion_percentage === '50'
-                                    ? 'blue-600'
-                                    : 'black'
-                            } text-white text-xs font-bold px-3 py-1 rounded-tr-lg rounded-bl-lg`}
-                        >
-                            {tache.completion_percentage.toFixed(2)} %
-                        </span>
-                        
+            {currentTaches.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+                    {currentTaches?.map((tache) => (
+                        <div key={tache.id} className="relative bg-white p-6 rounded-lg shadow-md hover:cursor-pointer hover:bg-slate-200 transition hover:scale-110 hover:shadow-xl group">
+                                <span
+                                className={`absolute top-0 left-0 bg-${
+                                        tache.status === 'completed'
+                                        ? 'green-500'
+                                        : tache.status === 'in-progress'
+                                        ? 'blue-600'
+                                        : 'black'
+                                } text-white text-xs font-bold px-3 py-1 rounded-tr-lg rounded-bl-lg`}
+                                >
+                                {tache.status}
+                                </span>
+                                <span
+                                className={`absolute top-0 right-0 bg-${
+                                        tache.completion_percentage === '100'
+                                        ? 'green-500'
+                                        : tache.completion_percentage === '50'
+                                        ? 'blue-600'
+                                        : 'black'
+                                } text-white text-xs font-bold px-3 py-1 rounded-tr-lg rounded-bl-lg`}
+                                >
+                                {tache.completion_percentage.toFixed(2)} %
+                                </span>
+                                
 
-                        <p className="mt-2 font-bold text-pink-700 ">      
-                                {tache.project.name && tache.project.name.length > 20
-                                ? `${tache.project.name.slice(0, 20)}...` 
-                                : tache.project.name || ''
-                                }
-                        </p>
-                        <h2 className="text-lg font-semibold mb-2">
-                                {tache.name && tache.name.length > 15
-                                ? `${tache.name.slice(0, 15)}...` 
-                                : tache.name || ''
-                                }
-                        </h2>
-                        <p className="text-gray-700 text-center mb-4">
-                            {tache.description && tache.description.length > 50 
-                                    ? `${tache.description.slice(0, 50)}...` 
-                                    : tache.description || 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'}
-                        </p>
-                        <p className="text-gray-700 text-sm font-bold mb-3 absolute bottom-0 mt-2">
-                            <strong>Limite :</strong> {new Date(tache.end_date).toLocaleDateString()}
-                        </p>
-                        <div className="absolute inset-0 flex items-center bg-gray-600 bg-opacity-70 rounded-lg justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <div className="inline-flex rounded-lg  border border-gray-100 bg-gray-100 p-1">
-                                    {auth.is_superuser &&  
-                                    <Link href={route('tasks.edit', tache.id)}
-                                            className="inline-flex items-center gap-2 rounded-md px-2 py-1 text-sm text-gray-500 hover:text-gray-700 focus:relative"
-                                    >
-                                         <i className="fas fa-edit"></i>
-                                         Modifier
-                                    </Link>
-                                    }
+                                <p className="mt-2 font-bold text-pink-700 ">      
+                                        {tache.project.name && tache.project.name.length > 20
+                                        ? `${tache.project.name.slice(0, 20)}...` 
+                                        : tache.project.name || ''
+                                        }
+                                </p>
+                                <h2 className="text-lg font-semibold mb-2">
+                                        {tache.name && tache.name.length > 15
+                                        ? `${tache.name.slice(0, 15)}...` 
+                                        : tache.name || ''
+                                        }
+                                </h2>
+                                <p className="text-gray-700 text-center mb-4">
+                                {tache.description && tache.description.length > 50 
+                                        ? `${tache.description.slice(0, 50)}...` 
+                                        : tache.description || 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'}
+                                </p>
+                                <p className="text-gray-700 text-sm font-bold mb-3 absolute bottom-0 mt-2">
+                                <strong>Limite :</strong> {new Date(tache.end_date).toLocaleDateString()}
+                                </p>
+                                <div className="absolute inset-0 flex items-center bg-gray-600 bg-opacity-70 rounded-lg justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div className="inline-flex rounded-lg  border border-gray-100 bg-gray-100 p-1">
+                                        {auth.is_superuser &&  
+                                        <Link href={route('tasks.edit', tache.id)}
+                                                className="inline-flex items-center gap-2 rounded-md px-2 py-1 text-sm text-gray-500 hover:text-gray-700 focus:relative"
+                                        >
+                                                <i className="fas fa-edit"></i>
+                                                Modifier
+                                        </Link>
+                                        }
 
-                                    <button onClick={() => openTaskModal(tache)}
-                                            className="inline-flex items-center gap-2 rounded-md px-2 py-1 text-sm text-gray-500 hover:text-gray-700 focus:relative"
-                                    >
-                                            
-                                            <i className="fas fa-eye"></i> Voir
-                                    </button>
-                                    {auth.is_superuser &&  
-                                    <button onClick={() => openDeleteModal(tache.id)}
-                                            className="inline-flex items-center gap-2 rounded-md bg-white px-2 py-1 text-sm text-red-500 shadow-sm focus:relative"
-                                    >
-                                            <i className="fas fa-trash-alt"></i>
-                                            Supprimer
-                                    </button>
-                                    }
-                            </div>
+                                        <button onClick={() => openTaskModal(tache)}
+                                                className="inline-flex items-center gap-2 rounded-md px-2 py-1 text-sm text-gray-500 hover:text-gray-700 focus:relative"
+                                        >
+                                                
+                                                <i className="fas fa-eye"></i> Voir
+                                        </button>
+                                        {auth.is_superuser &&  
+                                        <button onClick={() => openDeleteModal(tache.id)}
+                                                className="inline-flex items-center gap-2 rounded-md bg-white px-2 py-1 text-sm text-red-500 shadow-sm focus:relative"
+                                        >
+                                                <i className="fas fa-trash-alt"></i>
+                                                Supprimer
+                                        </button>
+                                        }
+                                </div>
+                                </div>
                         </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
+                ) : 
+                        <div className="flex mt-20  items-center justify-center space-x-2 p-4  w-full  text-gray-700">
+                                <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="w-6 h-6 text-gray-500"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                >
+                                <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 11v2m0 4h6m3-7h.01M12 6h.01M6 9h.01M16 9h.01M20 6v12m-4 0H8m0 0v-6m8 0v6"
+                                />
+                                </svg>
+                                <span className="text-lg font-medium">Aucune tâche trouvée...</span>
+                        </div>
+                }
         </div>
 
         {showTaskModal && (
