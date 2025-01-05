@@ -25,6 +25,8 @@ class DashboardController extends Controller
         $tasksCount = Tache::count();
         $completedTasksCount = Tache::where('status', 'completed')->count();
         $inProgressTasksCount = Tache::where('status', 'in-progress')->count();
+        $pendingTasksCount = Tache::where('status', 'pending')->count();
+        $cancelledTasksCount = Tache::where('status', 'cancelled')->count();
         $overdueTasksCount = Tache::where('end_date', '<', Carbon::now())->where('status', '!=', 'completed')->count();
 
         // Chart Data: Projects by status
@@ -68,7 +70,10 @@ class DashboardController extends Controller
             'projectsByStatus' => $projectsByStatus,  // Data for a pie chart or bar chart
             'tasksOverTime' => $tasksOverTime,        // Data for a line chart (tasks by month)
             'tasksStatusBreakdown' => $tasksStatusBreakdown,  // Data for a pie chart or bar chart
-            'projectsOverTime' => $projectsOverTime,  // Data for a line chart (projects by month)
+            'projectsOverTime' => $projectsOverTime,  
+            'pendingTasksCount' => $pendingTasksCount,
+            'cancelledTasksCount' => $cancelledTasksCount
+
         ]);
     }
 }

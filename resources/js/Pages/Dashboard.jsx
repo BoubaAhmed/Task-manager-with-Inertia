@@ -37,6 +37,8 @@ export default function Dashboard({
     tasksOverTime,     
     tasksStatusBreakdown, 
     projectsOverTime,
+    pendingTasksCount,
+    cancelledTasksCount
 }) {
     // Chart.js data for Projects by Status
     const projectsStatusData = {
@@ -84,11 +86,11 @@ export default function Dashboard({
 
     // Chart.js data for Tasks Overview (Bar Chart)
     const tasksBarChartData = {
-        labels: ['total', 'completed', 'in-progress', 'overdue'],
+        labels: ['total', 'completed', 'in-progress', 'overdue','cancelled','pending'],
         datasets: [{
             label: 'Tasks Overview',
-            data: [tasksCount, completedTasksCount, inProgressTasksCount, overdueTasksCount],
-            backgroundColor: ['#6439FF', '#624E88', '#399918', '#FF7F3E'],
+            data: [tasksCount, completedTasksCount, inProgressTasksCount, overdueTasksCount, cancelledTasksCount, pendingTasksCount],
+            backgroundColor: ['#6439FF', '#624E88', '#399918', '#FF7F3E', '#432E54', '#EB5B00'],
             borderWidth: 1,
         }],
     };
@@ -150,7 +152,33 @@ export default function Dashboard({
                                     />
                                 </StatCard>
                                 <StatCard title="Projets au fil du temps">
-                                    <Line data={projectsOverTimeData} />
+                                    <Line data={projectsOverTimeData} 
+                                    options={{
+                                        responsive: true,
+                                        plugins: {
+                                            tooltip: {
+                                                callbacks: {
+                                                    label: (context) => `${context.raw} projects created`,
+                                                },
+                                            },
+                                        },
+                                        scales: {
+                                            x: {
+                                                title: {
+                                                    display: false,
+                                                    text: 'Months',
+                                                },
+                                            },
+                                            y: {
+                                                beginAtZero: true, // Ensure y-axis starts from 0
+                                                title: {
+                                                    display: false,
+                                                    text: 'Number of Projects',
+                                                },
+                                            },
+                                        },
+                                    }}
+                                    />
                                 </StatCard>
                             </div>
 
