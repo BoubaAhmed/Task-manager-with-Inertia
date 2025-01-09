@@ -74,7 +74,7 @@ const Index = ({ assignments, users, tasks, projects }) => {
       header={
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-bold leading-tight text-gray-900 flex items-center gap-2">
-            <i className="fas fa-tasks text-indigo-600"></i> Assignations :
+            <i className="fas fa-tasks text-indigo-600"></i> Affectations :
           </h2>
           <div className="flex gap-4">
             <select
@@ -147,7 +147,7 @@ const Index = ({ assignments, users, tasks, projects }) => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-screen-xl">
         <div className="flex mb-3 justify-between gap-4">
             <p className="text-md font-bold leading-tight text-gray-900">
-              Il y a {assignments.length} assignations disponibles :
+              Il y a {assignments.length} affectations disponibles :
             </p>
             <input
               type="text"

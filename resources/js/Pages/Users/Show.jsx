@@ -11,16 +11,15 @@ export default function Show() {
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">{user.name}</h2>}
         >
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 py-4 flex gap-6">
-                {/* Left: User Info Card */}
                 <div className="w-1/4 bg-white shadow-sm sm:rounded-lg p-6">
-                    <h3 className="text-lg font-semibold mb-4">User Information</h3>
+                    <h3 className="text-lg font-semibold mb-4">Informations sur l'utilisateur</h3>
                     <div className="space-y-2">
-                        <p><strong>Name:</strong> {user.name}</p>
+                        <p><strong>Nom Complete:</strong> {user.name}</p>
                         <p><strong>Email:</strong> {user.email}</p>
-                        <p><strong>Phone Number:</strong> {user.phone_number || 'N/A'}</p>
+                        <p><strong>Tel:</strong> {user.phone_number || 'N/A'}</p>
                         <p><strong>Role:</strong> {user.role}</p>
                         <p><strong>Status:</strong> {user.status}</p>
-                        <p><strong>Superuser:</strong> {user.is_superuser ? 'Yes' : 'No'}</p>
+                        <p><strong>Admin:</strong> {user.is_superuser ? 'Yes' : 'No'}</p>
                     </div>
                 </div>
 
@@ -33,7 +32,7 @@ export default function Show() {
                             onClick={() => setActiveTab('projects')}
                         >
                             <i className="fas fa-clipboard-list"></i>
-                            Projects
+                            Projets
                         </button>
 
                         <button
@@ -43,7 +42,7 @@ export default function Show() {
                             onClick={() => setActiveTab('tasks')}
                         >
                             <i className="fas fa-tasks"></i>
-                            Tasks
+                            Taches
                         </button>
 
                         <div className="ml-auto">
@@ -58,11 +57,10 @@ export default function Show() {
                     </div>
 
 
-                    {/* Tab Content */}
                     <div className="p-6">
                         {activeTab === 'projects' && (
                             <div>
-                                <h3 className="text-lg font-semibold mb-4">Projects</h3>
+                                <h3 className="text-lg font-semibold mb-4">Projets</h3>
                                 {user.projects.length > 0 ? (
                                     <div className="grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                         {user.projects.map((project) => (
@@ -79,9 +77,9 @@ export default function Show() {
                                                     {project.status}
                                                 </span>
                                                 <h4 className="text-md font-bold mb-2">{project.name}</h4>
-                                                <p><strong>Priority:</strong> {project.priority}</p>
-                                                <p><strong>Start:</strong> {new Date(project.start_date).toLocaleDateString()}</p>
-                                                <p><strong>End:</strong> {new Date(project.end_date).toLocaleDateString()}</p>
+                                                <p><strong>Priorité :</strong> {project.priority}</p>
+                                                <p><strong>début:</strong> {new Date(project.start_date).toLocaleDateString()}</p>
+                                                <p><strong>fin:</strong> {new Date(project.end_date).toLocaleDateString()}</p>
                                                 <p><strong>Description:</strong> {project.description || 'N/A'}</p>
                                                 <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
                                                     <div className="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
@@ -94,14 +92,14 @@ export default function Show() {
                                         ))}
                                     </div>
                                 ) : (
-                                    <p>No projects assigned.</p>
+                                    <p>Aucun projet attribué.</p>
                                 )}
                             </div>
                         )}
 
                         {activeTab === 'tasks' && (
                            <div>
-                                <h3 className="text-lg font-semibold mb-4">Tasks</h3>
+                                <h3 className="text-lg font-semibold mb-4">Tâches</h3>
                                 {user.tasks?.length > 0 ? (
                                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                         {user.tasks.map((task) => (
@@ -109,7 +107,6 @@ export default function Show() {
                                                 key={task.id}
                                                 className="relative bg-gray-100 hover:cursor-pointer hover:bg-slate-200 hover:shadow-lg transform opacity-75 hover:opacity-100 hover:scale-105 transition duration-300 shadow rounded-lg p-4"
                                             >
-                                                {/* Status indicator */}
                                                 <span
                                                     className={`absolute top-0 right-0 bg-${
                                                         task.status === 'completed'
@@ -121,13 +118,11 @@ export default function Show() {
                                                 >
                                                     {task.status}
                                                 </span>
-                                                {/* Task Information */}
                                                 <h4 className="text-md font-bold mb-2">{task.name}</h4>
-                                                <p><strong>Priority:</strong> {task.priority}</p>
-                                                <p><strong>Start:</strong> {new Date(task.start_date).toLocaleDateString()}</p>
-                                                <p><strong>End:</strong> {task.end_date ? new Date(task.end_date).toLocaleDateString() : 'N/A'}</p>
+                                                <p><strong>Priorité:</strong> {task.priority}</p>
+                                                <p><strong>début:</strong> {new Date(task.start_date).toLocaleDateString()}</p>
+                                                <p><strong>fin:</strong> {task.end_date ? new Date(task.end_date).toLocaleDateString() : 'N/A'}</p>
                             
-                                                {/* Button shown on hover */}
                                                 <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
                                                     <div className="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
                                                         <Link
@@ -142,7 +137,7 @@ export default function Show() {
                                         ))}
                                     </div>
                                 ) : (
-                                    <p>No tasks assigned.</p>
+                                    <p>Aucune tâche affecté.</p>
                                 )}
                             </div>
                        

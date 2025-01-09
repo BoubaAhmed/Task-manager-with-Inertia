@@ -111,7 +111,7 @@ const Index = ({ users }) => {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-screen-xl">
                 <div className="flex justify-between mb-2">
                     <p className="text-md font-bold leading-tight text-gray-900">
-                        Il y a {users.length} utilisateurs disponibles à l'exception des administrateurs :
+                        Il y a {users.length} utilisateurs disponibles :
                     </p>    
                     <div className="flex justify-center items-center space-x-2">
                         <button

@@ -25,15 +25,13 @@ const Edit = ({ assignment, users, tasks }) => {
           onSubmit={handleSubmit}
           className="bg-white shadow-md rounded px-8 pt-5 pb-3 grid grid-cols-1 sm:grid-cols-2 gap-6"
         >
-          {/* Form Title */}
           <div className="col-span-2 text-center">
             <h2 className="text-2xl font-bold text-gray-800 flex items-center justify-center gap-2">
-              <i className="fas fa-edit text-blue-500"></i> Modifier une tâche
+              <i className="fas fa-edit text-blue-500"></i> Modifier une Affectation
             </h2>
             <p className="text-gray-500 text-sm">Mettez à jour les informations de l'assignation.</p>
           </div>
 
-          {/* User Selection */}
           <div className="col-span-2">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="user_id">
               Utilisateur
@@ -58,8 +56,6 @@ const Edit = ({ assignment, users, tasks }) => {
             </div>
             {errors.user_id && <div className="text-red-500 text-xs">{errors.user_id}</div>}
           </div>
-
-          {/* Task Selection */}
           <div className="col-span-2">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="task_id">
               Tâche
@@ -84,8 +80,6 @@ const Edit = ({ assignment, users, tasks }) => {
             </div>
             {errors.task_id && <div className="text-red-500 text-xs">{errors.task_id}</div>}
           </div>
-
-          {/* Assigned Date */}
           <div className="col-span-2">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="assigned_date">
               Date d'assignation
@@ -110,7 +104,7 @@ const Edit = ({ assignment, users, tasks }) => {
               id="status"
               className="shadow appearance-none border rounded w-full py-2 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               value={data.status}
-              onChange={(e) => setData('status', e.target.value)}  // Update 'status' instead of 'assigned_date'
+              onChange={(e) => setData('status', e.target.value)}
               required
             >
               <option value="pending">Pending</option>

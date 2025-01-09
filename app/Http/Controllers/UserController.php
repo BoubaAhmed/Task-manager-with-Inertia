@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Inertia\Inertia;
+use \Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserController extends Controller
 {
@@ -14,12 +15,16 @@ class UserController extends Controller
         $this->middleware('ensureSuperuser')->except(['index', 'show']);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::where('is_superuser', false)->orderBy('created_at', 'desc')->get();
+        if ($request->user()->is_superuser) {
+            $users = User::orderBy('created_at', 'desc')->get();
+        } else {
+            $users = User::where('is_superuser', false)->orderBy('created_at', 'desc')->get();
+        }
         return Inertia::render('Users/Index', [
             'users' => $users,
-        ]);
+        ]); 
     }
 
     public function create() 
@@ -47,26 +52,37 @@ class UserController extends Controller
             'status' => $validated['status'],
             'is_superuser' => $validated['is_superuser'],
         ]);
-        return redirect()->route('users.index')->with('message', 'User created successfully!');
+        return redirect()->route('users.index')->with('success', 'User created successfully!');
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $user = User::with(['projects', 'tasks'])->findOrFail($id);
-        return Inertia::render('Users/Show', [
-            'user' => [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'phone_number' => $user->phone_number,
-                'role' => $user->role,
-                'status' => $user->status,
-                'is_superuser' => $user->is_superuser,
-                'projects' => $user->projects,
-                'tasks' => $user->tasks,
-            ],
-        ]);
+        try {
+            if (!$request->user()->is_superuser) {
+                $user = User::where('is_superuser', false)
+                            ->with(['projects', 'tasks'])
+                            ->findOrFail($id);
+            } else {
+                $user = User::with(['projects', 'tasks'])->findOrFail($id);
+            }
+            return Inertia::render('Users/Show', [
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'phone_number' => $user->phone_number,
+                    'role' => $user->role,
+                    'status' => $user->status,
+                    'is_superuser' => $user->is_superuser,
+                    'projects' => $user->projects,
+                    'tasks' => $user->tasks,
+                ],
+            ]);
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('users.index')->with('error', 'Utilisateur introuvable ou accès refusé.');
+        }
     }
+    
 
     public function edit(User $user)
     {
@@ -106,8 +122,11 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        if ($user->is_superuser) {
+            return redirect()->route('users.index')->with('error', 'Impossible de supprimer un admin.');
+        }    
         $user->delete();
-
-        return redirect()->route('users.index')->with('message', 'User deleted successfully!');
+        return redirect()->route('users.index')->with('message', 'Utilisateur supprimé avec succès.');
     }
+    
 }

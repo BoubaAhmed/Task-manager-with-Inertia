@@ -30,15 +30,13 @@ const Create = ({ users, tasks, projects }) => {
       <Head title="Create Assignment" />
       <div className="container mx-auto px-4 mt-20 sm:px-6 lg:px-8 py-8 max-w-screen-sm">
         <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-5 pb-3 grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {/* Form Title */}
           <div className="col-span-2 text-center">
             <h2 className="text-2xl font-bold text-gray-800 flex items-center justify-center gap-2">
-              <i className="fas fa-tasks text-blue-500"></i> Ajouter une tâche
+              <i className="fas fa-tasks text-blue-500"></i> Ajouter une Affectation
             </h2>
             <p className="text-gray-500 text-sm">Remplissez le formulaire ci-dessous pour attribuer une tâche à un utilisateur.</p>
           </div>
 
-          {/* Project Selection */}
           <div className="col-span-2">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="project_id">Projet</label>
             <div className="relative">
@@ -62,7 +60,6 @@ const Create = ({ users, tasks, projects }) => {
             {errors.project_id && <div className="text-red-500 text-xs">{errors.project_id}</div>}
           </div>
 
-          {/* User Selection */}
           <div className="col-span-2">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="user_id">Utilisateur</label>
             <div className="relative">
@@ -86,7 +83,6 @@ const Create = ({ users, tasks, projects }) => {
             {errors.user_id && <div className="text-red-500 text-xs">{errors.user_id}</div>}
           </div>
 
-          {/* Task Selection */}
           <div className="col-span-2">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="task_id">Tâche</label>
             <div className="relative">
@@ -98,7 +94,7 @@ const Create = ({ users, tasks, projects }) => {
                 value={data.task_id}
                 onChange={(e) => setData('task_id', e.target.value)}
                 required
-                disabled={!data.project_id} // Disable if no project is selected
+                disabled={!data.project_id} 
               >
                 <option value="">Sélectionnez une tâche</option>
                 {filteredTasks.map((task) => (
@@ -111,7 +107,6 @@ const Create = ({ users, tasks, projects }) => {
             {errors.task_id && <div className="text-red-500 text-xs">{errors.task_id}</div>}
           </div>
 
-          {/* Submit Button */}
           <div className="flex items-center justify-end col-span-2 gap-4">
             <button
               type="submit"
