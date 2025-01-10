@@ -11,7 +11,7 @@ const Index = ({ taches, projects }) => {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedProject, setSelectedProject] = useState('');
     const [selectedStatus, setSelectedStatus] = useState('');
-    const [showTaskModal, setShowTaskModal] = useState(false); // State for task details modal
+    const [showTaskModal, setShowTaskModal] = useState(false); 
     const [taskToShow, setTaskToShow] = useState(null);
     const { flash , auth } = usePage().props;
     const [message, setMessage] = useState({ success: null, error: null });
@@ -29,7 +29,6 @@ const Index = ({ taches, projects }) => {
         }, 5000);
     }, [message]);
 
-  // Filter logic
   const filteredTaches = taches.filter((tache) => {
     return (
       (selectedProject ? String(tache.project_id) === String(selectedProject) : true) &&
@@ -38,13 +37,11 @@ const Index = ({ taches, projects }) => {
     );
   });
 
-  // Pagination logic
   const indexOfLastProject = currentPage * projectsPerPage;
   const indexOfFirstProject = indexOfLastProject - projectsPerPage;
   const currentTaches = filteredTaches.slice(indexOfFirstProject, indexOfLastProject);
   const totalPages = Math.ceil(filteredTaches.length / projectsPerPage);
 
-  // Handle page change
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
@@ -57,7 +54,6 @@ const Index = ({ taches, projects }) => {
     }
   };
 
-  // Show modal for delete confirmation
   const openDeleteModal = (taskId) => {
     setTaskToDelete(taskId);
     setShowDeleteModal(true);
@@ -76,7 +72,6 @@ const Index = ({ taches, projects }) => {
     }
   };
 
-  // Handle filter change
   const handleFilterChange = (type, value) => {
     if (type === 'project') {
       setSelectedProject(value);
@@ -85,7 +80,6 @@ const Index = ({ taches, projects }) => {
     }
   };
 
-  // Open Task Info Modal
   const openTaskModal = (tache) => {
     setTaskToShow(tache);
     setShowTaskModal(true);
@@ -109,12 +103,12 @@ return (
                         placeholder="Rechercher des tâches..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="px-4 py-1 border-2 border-indigo-600 rounded text-sm shadow-xl "
+                        className="px-4 py-1 border-2 border-indigo-600 rounded text-sm  "
                     />
                     <select
                         value={selectedProject}
                         onChange={(e) => handleFilterChange('project', e.target.value)}
-                        className="px-4 py-1 border rounded border-2 border-indigo-600 text-sm"
+                        className="px-4 py-1  rounded border-2 border-indigo-600 text-sm"
                     >
                         <option value="">Filtrer par projet</option>
                         {projects?.map((project) => (
@@ -126,7 +120,7 @@ return (
                     <select
                         value={selectedStatus}
                         onChange={(e) => handleFilterChange('status', e.target.value)}
-                        className="px-8 py-1 border rounded border-2 border-indigo-600 text-sm"
+                        className="px-8 py-1  rounded border-2 border-indigo-600 text-sm"
                     >
                         <option value="">Filtrer par statut</option>
                         <option value="completed">Complété</option>
@@ -159,7 +153,7 @@ return (
                         </span>
                     </Link>
                     }
-                    <Link href={route('mytasks')} 
+                    {/* <Link href={route('mytasks')} 
                             className="group relative inline-flex items-center overflow-hidden rounded border-0 shadow-lg text-stone-200 border-current px-4 py-2 bg-green-600 focus:outline-none focus:ring active:text-indigo-500">
                             <span className="absolute -end-full transition-all group-hover:end-1">
                                     <i className="fas fa-tasks"></i>
@@ -167,7 +161,7 @@ return (
                             <span className="text-xs font-medium transition-all group-hover:me-2">
                             Mes Tâches
                         </span>
-                    </Link>
+                    </Link> */}
                 </div>
             </div>
         }
@@ -338,7 +332,6 @@ return (
                 </div>
                 </div>
 
-                        {/* Grid Layout for the Task Information (3 columns) */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                                 <div>
                                         <p className="font-medium text-gray-600">Projet :</p>
@@ -379,7 +372,6 @@ return (
                                         <p className="text-gray-800">{new Date(taskToShow?.updated_at).toLocaleDateString()}</p>
                                 </div>
 
-                                {/* Display Assigned Users */}
                         <div className="col-span-3">
                                         <p className="font-medium text-gray-600">Utilisateurs assignés :</p>
                                         <div className="space-y-2">
@@ -402,7 +394,6 @@ return (
                                 </div>
                         </div>
 
-                        {/* Close Button */}
                         <div className="mt-6 flex justify-end">
                                 <button
                                         onClick={closeTaskModal}

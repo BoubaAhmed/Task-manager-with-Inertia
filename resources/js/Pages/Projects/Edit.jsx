@@ -23,7 +23,6 @@ const Edit = ({ users, project }) => {
       <Head title="Modifier un projet" />
       <div className="container mx-auto px-4 mt-10 sm:px-6 lg:px-8 py-8 max-w-screen-sm">
         <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-5 pb-3 grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {/* Titre du formulaire */}
           <div className="col-span-2 text-center">
             <h2 className="text-2xl font-bold text-gray-800 flex items-center justify-center gap-2">
               <i className="fas fa-project-diagram text-blue-500"></i> Modifier le projet
@@ -31,7 +30,6 @@ const Edit = ({ users, project }) => {
             <p className="text-gray-500 text-sm">Mettez à jour les informations du projet ci-dessous.</p>
           </div>
 
-          {/* Nom */}
           <div className="mb-1">
             <label className="block text-gray-700 text-sm font-bold mb-2">Nom</label>
             <div className="relative">
@@ -47,7 +45,6 @@ const Edit = ({ users, project }) => {
             {errors.name ? <div className="text-red-500 text-xs">{errors.name}</div> : <p className="text-gray-500 text-xs mt-1">Ceci est le nom de votre projet.</p>}
           </div>
 
-          {/* Chef de Projet */}
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">Chef de Projet</label>
             <div className="relative">
@@ -68,7 +65,6 @@ const Edit = ({ users, project }) => {
             {errors.user_id && <div className="text-red-500 text-xs">{errors.user_id}</div>}
           </div>
 
-          {/* Dates */}
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">Date de début</label>
             <input
@@ -91,7 +87,6 @@ const Edit = ({ users, project }) => {
             {errors.end_date && <div className="text-red-500 text-xs">{errors.end_date}</div>}
           </div>
 
-          {/* Priorité */}
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">Priorité</label>
             <div className="relative">
@@ -109,7 +104,6 @@ const Edit = ({ users, project }) => {
             {errors.priority && <div className="text-red-500 text-xs">{errors.priority}</div>}
           </div>
 
-          {/* Statut */}
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">Statut</label>
             <div className="relative">
@@ -128,7 +122,6 @@ const Edit = ({ users, project }) => {
             {errors.status && <div className="text-red-500 text-xs">{errors.status}</div>}
           </div>
 
-          {/* Description */}
           <div className="col-span-2">
             <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
             <textarea
@@ -140,7 +133,6 @@ const Edit = ({ users, project }) => {
             {errors.description ? <div className="text-red-500 text-xs">{errors.description}</div> : <p className="text-gray-500 text-xs mt-1">Fournissez une description détaillée du projet.</p>}
           </div>
 
-          {/* Boutons */}
           <div className="flex items-center justify-end col-span-2 gap-4">
             <button
               type="submit"

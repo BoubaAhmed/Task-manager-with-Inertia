@@ -35,8 +35,8 @@ class Tache extends Model
         return [
             'start_date' => 'date',
             'end_date' => 'date',
-            'status' => 'string',  // Since it's an enum, we treat it as a string
-            'priority' => 'string', // Priority is also an enum, cast as string
+            'status' => 'string',  
+            'priority' => 'string', 
         ];
     }
 
@@ -54,41 +54,27 @@ class Tache extends Model
     {
         return $this->hasMany(Assignment::class, 'task_id');
     }
-    /**
-     * Check if the task is completed.
-     *
-     * @return bool
-     */
+
+    
     public function isCompleted()
     {
         return $this->status === 'completed';
     }
 
-    /**
-     * Check if the task is in-progress.
-     *
-     * @return bool
-     */
+
+    
     public function isInProgress()
     {
         return $this->status === 'in-progress';
     }
 
-    /**
-     * Check if the task is pending.
-     *
-     * @return bool
-     */
+    
     public function isPending()
     {
         return $this->status === 'pending';
     }
 
-    /**
-     * Check if the task is cancelled.
-     *
-     * @return bool
-     */
+
     public function isCancelled()
     {
         return $this->status === 'cancelled';
@@ -96,10 +82,8 @@ class Tache extends Model
 
     public function getCompletionPercentageAttribute()
     {
-        // Get the total number of assignments related to the task
         $totalAssignments = $this->assignments->count();
 
-        // Get the number of completed assignments
         $completedAssignments = $this->assignments->filter(function ($assignment) {
             return $assignment->status === 'completed';
         })->count();
@@ -108,17 +92,10 @@ class Tache extends Model
     }
     
 
-    
-    /**
-     * Get the users assigned to the task.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
     public function assignedUsers()
     {
         return $this->assignments->pluck('user');
     }
-
 
 
     public function cancelUnassignedTasks()

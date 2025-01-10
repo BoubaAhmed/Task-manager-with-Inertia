@@ -95,7 +95,6 @@ const Index = ({ projects }) => {
     >
       <Head title="Projects" />
 
-      {/* Delete Confirmation Modal */}
       <Modal
         show={showModal}
         onClose={() => setShowModal(false)}
@@ -127,13 +126,11 @@ const Index = ({ projects }) => {
             <h3 className="text-2xl font-semibold text-gray-800 mb-4">Project Information</h3>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Project Name */}
               <div className="flex flex-col">
                 <span className="text-gray-600 font-medium">Name:</span>
                 <span className="text-lg text-gray-800">{selectedProject.name}</span>
               </div>
 
-              {/* Project Status */}
               <div className="flex flex-col">
                 <span className="text-gray-600 font-medium">Status:</span>
                 <span
@@ -143,7 +140,6 @@ const Index = ({ projects }) => {
                 </span>
               </div>
 
-              {/* Project Priority */}
               <div className="flex flex-col">
                 <span className="text-gray-600 font-medium">Priority:</span>
                 <span className={`text-lg text-${selectedProject.priority === 'high' ? 'red' : selectedProject.priority === 'medium' ? 'yellow' : 'green'}-600`}>
@@ -151,7 +147,6 @@ const Index = ({ projects }) => {
                 </span>
               </div>
 
-              {/* Start and End Dates */}
               <div className="flex flex-col">
                 <span className="text-gray-600 font-medium">Start Date:</span>
                 <span className="text-lg text-gray-800">
@@ -166,13 +161,11 @@ const Index = ({ projects }) => {
                 </span>
               </div>
 
-              {/* Project Description */}
               <div className="flex flex-col col-span-2">
                 <span className="text-gray-600 font-medium">Description:</span>
                 <span className="text-lg text-gray-800">{selectedProject.description}</span>
               </div>
 
-              {/* Tasks */}
               <div className="flex flex-col col-span-2">
                 <span className="text-gray-600 font-medium">Tasks:</span>
                 {selectedProject.tasks.length > 0 ? (
@@ -189,7 +182,6 @@ const Index = ({ projects }) => {
                 )}
               </div>
 
-              {/* User Information */}
               <div className="flex flex-col col-span-2">
                 <span className="text-gray-600 font-medium">User:</span>
                 <p className="text-lg text-gray-800">Name: {selectedProject.user.name}</p>

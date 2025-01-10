@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'; // Adjust the import based on your file structure
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'; 
 import { Inertia } from '@inertiajs/inertia';
 import { Head, useForm } from '@inertiajs/react';
 
@@ -34,7 +34,6 @@ const Edit = ({ user }) => {
           <h2 className="text-center py-3 font-bold text-xl">Edit User</h2>
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 gap-6">
-              {/* Name */}
               <div>
                 <label
                   htmlFor="name"
@@ -58,7 +57,6 @@ const Edit = ({ user }) => {
               </div>
               
 
-              {/* Email */}
               <div>
                 <label
                   htmlFor="email"
@@ -81,7 +79,6 @@ const Edit = ({ user }) => {
                 )}
               </div>
 
-              {/* Password */}
               <div>
                 <label
                   htmlFor="password"
@@ -103,7 +100,6 @@ const Edit = ({ user }) => {
                 )}
               </div>
 
-              {/* Confirm Password */}
               <div>
                 <label
                   htmlFor="password_confirmation"
@@ -125,7 +121,6 @@ const Edit = ({ user }) => {
                 )}
               </div>
 
-              {/* Role */}
               <div>
                 <label
                   htmlFor="role"
@@ -156,7 +151,6 @@ const Edit = ({ user }) => {
                 )}
               </div>
 
-              {/* Status */}
               <div>
                 <label
                   htmlFor="status"
@@ -205,7 +199,6 @@ const Edit = ({ user }) => {
                 )}
               </div>
 
-              {/* Superuser */}
               <div className='inline-flex items-center space-x-2'>
                 <label
                   htmlFor="is_superuser"

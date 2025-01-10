@@ -17,7 +17,6 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // Get counts for the dashboard
         $usersCount = User::count();
         $activeUsersCount = User::where('status', 'active')->count();
         $projectsCount = Project::count();
@@ -29,7 +28,6 @@ class DashboardController extends Controller
         $cancelledTasksCount = Tache::where('status', 'cancelled')->count();
         $overdueTasksCount = Tache::where('end_date', '<', Carbon::now())->where('status', '!=', 'completed')->count();
 
-        // Chart Data: Projects by status
         $projectsByStatus = Project::selectRaw('status, count(*) as count')
             ->groupBy('status')
             ->get()
@@ -37,13 +35,11 @@ class DashboardController extends Controller
                 return [$item->status => $item->count];
             });
 
-        // Chart Data: Tasks over time (monthly task creation)
         $tasksOverTime = Tache::selectRaw('MONTH(created_at) as month, count(*) as task_count')
             ->groupBy('month')
-            ->whereYear('created_at', Carbon::now()->year) // Filter tasks from this year
+            ->whereYear('created_at', Carbon::now()->year) 
             ->get();
 
-        // Chart Data: Task Status Breakdown (completed, in-progress, overdue)
         $tasksStatusBreakdown = Tache::selectRaw('status, count(*) as count')
             ->groupBy('status')
             ->get()
@@ -51,13 +47,11 @@ class DashboardController extends Controller
                 return [$item->status => $item->count];
             });
 
-        // Chart Data: Projects created over the last 12 months
         $projectsOverTime = Project::selectRaw('MONTH(created_at) as month, count(*) as project_count')
             ->groupBy('month')
             ->whereYear('created_at', Carbon::now()->year)
             ->get();
 
-        // Send all stats and data to the view, including data for charts and visualizations
         return Inertia::render('Dashboard', [
             'usersCount' => $usersCount,
             'activeUsersCount' => $activeUsersCount,
@@ -67,9 +61,9 @@ class DashboardController extends Controller
             'completedTasksCount' => $completedTasksCount,
             'inProgressTasksCount' => $inProgressTasksCount,
             'overdueTasksCount' => $overdueTasksCount,
-            'projectsByStatus' => $projectsByStatus,  // Data for a pie chart or bar chart
-            'tasksOverTime' => $tasksOverTime,        // Data for a line chart (tasks by month)
-            'tasksStatusBreakdown' => $tasksStatusBreakdown,  // Data for a pie chart or bar chart
+            'projectsByStatus' => $projectsByStatus,  
+            'tasksOverTime' => $tasksOverTime,        
+            'tasksStatusBreakdown' => $tasksStatusBreakdown,  
             'projectsOverTime' => $projectsOverTime,  
             'pendingTasksCount' => $pendingTasksCount,
             'cancelledTasksCount' => $cancelledTasksCount

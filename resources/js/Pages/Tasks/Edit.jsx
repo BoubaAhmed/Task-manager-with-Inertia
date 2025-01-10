@@ -22,7 +22,6 @@ const Edit = ({ tache, projects }) => {
       <Head title="Edit Task" />
       <div className="container mx-auto mt-10 px-4 sm:px-6 lg:px-8 py-8 max-w-screen-sm">
         <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-5 pb-3 grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {/* Title */}
           <div className="col-span-2 text-center">
             <h2 className="text-2xl font-bold text-gray-800 flex items-center justify-center gap-2">
               <i className="fas fa-tasks text-blue-500"></i> Edit Task
@@ -30,7 +29,6 @@ const Edit = ({ tache, projects }) => {
             <p className="text-gray-500 text-sm">Update the task details below.</p>
           </div>
 
-          {/* Project Selection */}
           <div className="mb-1">
             <label className="block text-gray-700 text-sm font-bold mb-2">Project</label>
             <div className="relative">
@@ -51,7 +49,6 @@ const Edit = ({ tache, projects }) => {
             {errors.project_id && <div className="text-red-500 text-xs">{errors.project_id}</div>}
           </div>
 
-          {/* Task Name */}
           <div className="mb-1">
             <label className="block text-gray-700 text-sm font-bold mb-2">Task Name</label>
             <div className="relative">
@@ -67,7 +64,6 @@ const Edit = ({ tache, projects }) => {
             {errors.name && <div className="text-red-500 text-xs">{errors.name}</div>}
           </div>
 
-          {/* Description */}
           <div className="col-span-2 mb-1">
             <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
             <textarea
@@ -79,7 +75,6 @@ const Edit = ({ tache, projects }) => {
             {errors.description && <div className="text-red-500 text-xs">{errors.description}</div>}
           </div>
 
-          {/* Status */}
           <div className="mb-1">
             <label className="block text-gray-700 text-sm font-bold mb-2">Status</label>
             <div className="relative">
@@ -98,7 +93,6 @@ const Edit = ({ tache, projects }) => {
             {errors.status && <div className="text-red-500 text-xs">{errors.status}</div>}
           </div>
 
-          {/* Priority */}
           <div className="mb-1">
             <label className="block text-gray-700 text-sm font-bold mb-2">Priority</label>
             <div className="relative">
@@ -116,7 +110,6 @@ const Edit = ({ tache, projects }) => {
             {errors.priority && <div className="text-red-500 text-xs">{errors.priority}</div>}
           </div>
 
-          {/* Start Date */}
           <div className="mb-1">
             <label className="block text-gray-700 text-sm font-bold mb-2">Start Date</label>
             <input
@@ -128,7 +121,6 @@ const Edit = ({ tache, projects }) => {
             {errors.start_date && <div className="text-red-500 text-xs">{errors.start_date}</div>}
           </div>
 
-          {/* End Date */}
           <div className="mb-1">
             <label className="block text-gray-700 text-sm font-bold mb-2">End Date</label>
             <input
@@ -140,7 +132,6 @@ const Edit = ({ tache, projects }) => {
             {errors.end_date && <div className="text-red-500 text-xs">{errors.end_date}</div>}
           </div>
 
-          {/* Submit Button */}
           <div className="flex items-center justify-end col-span-2 gap-4">
             <button
               type="submit"
@@ -150,7 +141,6 @@ const Edit = ({ tache, projects }) => {
               <i className="fas fa-save"></i> Save Changes
             </button>
 
-            {/* Cancel Button */}
             <Link
               href={route('tasks.index')}
               className="border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white text-sm font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline flex items-center gap-2 transition-transform duration-200 ease-in-out transform hover:scale-105"

@@ -4,7 +4,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
 export default function Show() {
     const { user } = usePage().props;
-    const [activeTab, setActiveTab] = useState('projects'); // Default to 'projects'
+    const [activeTab, setActiveTab] = useState('projects');
 
     return (
         <AuthenticatedLayout
@@ -126,7 +126,7 @@ export default function Show() {
                                                 <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
                                                     <div className="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
                                                         <Link
-                                                            href={`/tasks`} // Adjust the link to the task details page
+                                                            href={`/tasks`} 
                                                             className="inline-flex items-center gap-2 rounded-md px-2 py-1 text-sm text-gray-500 hover:text-gray-700"
                                                         >
                                                             <i className="fas fa-eye"></i> Voir

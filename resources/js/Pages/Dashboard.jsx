@@ -3,7 +3,6 @@ import { Head } from '@inertiajs/react';
 import { Bar, Doughnut, Line, Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, CategoryScale, LinearScale, PointElement, LineElement, BarElement } from 'chart.js';
 
-// Registering components for Chart.js
 ChartJS.register(
     Title,
     Tooltip,
@@ -16,7 +15,6 @@ ChartJS.register(
     BarElement,
 );
 
-// Reusable Card Component
 const StatCard = ({ title, children }) => (
     <div className="bg-white p-6 shadow rounded-lg">
         <h4 className="text-xl font-semibold mb-4">{title}</h4>
@@ -40,7 +38,6 @@ export default function Dashboard({
     pendingTasksCount,
     cancelledTasksCount
 }) {
-    // Chart.js data for Projects by Status
     const projectsStatusData = {
         labels: Object.keys(projectsByStatus),
         datasets: [{
@@ -61,7 +58,6 @@ export default function Dashboard({
             tension: 0.4,
         }],
     };
-    // Chart.js data for Task Status Breakdown
     const tasksStatusData = {
         labels: Object.keys(tasksStatusBreakdown),
         datasets: [{
@@ -71,7 +67,6 @@ export default function Dashboard({
         }],
     };
 
-    // Chart.js data for Projects Over Time
     const projectsOverTimeData = {
         labels: projectsOverTime.map(item => new Date(0, item.month - 1).toLocaleString('default', { month: 'long' })).reverse(),
         datasets: [{
@@ -84,9 +79,8 @@ export default function Dashboard({
         }],
     };
 
-    // Chart.js data for Tasks Overview (Bar Chart)
     const tasksBarChartData = {
-        labels: ['total', 'completed', 'in-progress', 'overdue','cancelled','pending'],
+        labels: ['total', 'complété', 'en cours', 'en retard','annulé','en attente'],
         datasets: [{
             label: 'Tasks Overview',
             data: [tasksCount, completedTasksCount, inProgressTasksCount, overdueTasksCount, cancelledTasksCount, pendingTasksCount],
@@ -141,7 +135,7 @@ export default function Dashboard({
                                                     },
                                                 },
                                                 y: {
-                                                    beginAtZero: true, // Ensure y-axis starts from 0
+                                                    beginAtZero: true, 
                                                     title: {
                                                         display: false,
                                                         text: 'Number of Tasks',
@@ -170,7 +164,7 @@ export default function Dashboard({
                                                 },
                                             },
                                             y: {
-                                                beginAtZero: true, // Ensure y-axis starts from 0
+                                                beginAtZero: true, 
                                                 title: {
                                                     display: false,
                                                     text: 'Number of Projects',

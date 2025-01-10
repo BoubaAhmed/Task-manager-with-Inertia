@@ -23,7 +23,6 @@ const Create = ({ users }) => {
       <Head title="Créer un projet" />
       <div className="container mx-auto mt-5  px-4 sm:px-6 lg:px-8 py-8 max-w-screen-sm">
           <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-5 pb-3 grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {/* Titre du formulaire */}
             <div className="col-span-2  text-center">
               <h2 className="text-2xl font-bold text-gray-800 flex items-center justify-center gap-2">
                 <i className="fas fa-project-diagram text-blue-500"></i> Ajouter un projet
@@ -45,7 +44,6 @@ const Create = ({ users }) => {
               {errors.name ? <div className="text-red-500 text-xs">{errors.name}</div> : <p className="text-gray-500 text-xs mt-1">Ceci est le nom de votre projet.</p>}
             </div>
 
-            {/* Utilisateur assigné avec icône */}
             <div className="">
               <label className="block text-gray-700 text-sm font-bold mb-2">Chef de Projet</label>
               <div className="relative">
@@ -66,7 +64,6 @@ const Create = ({ users }) => {
               {errors.user_id && <div className="text-red-500 text-xs">{errors.user_id}</div>}
             </div>
 
-            {/* Date de début */}
             <div className="">
               <label className="block text-gray-700 text-sm font-bold mb-2">Date de début</label>
                 <input
@@ -78,7 +75,6 @@ const Create = ({ users }) => {
               {errors.start_date && <div className="text-red-500 text-xs">{errors.start_date}</div>}
             </div>
 
-            {/* Date de fin */}
             <div className="">
               <label className="block text-gray-700 text-sm font-bold mb-2">Date de fin</label>
                 <input
@@ -90,7 +86,6 @@ const Create = ({ users }) => {
               {errors.end_date && <div className="text-red-500 text-xs">{errors.end_date}</div>}
             </div>
 
-            {/* Priorité */}
             <div className="">
               <label className="block text-gray-700 text-sm font-bold mb-2">Priorité</label>
               <div className="relative">
@@ -108,7 +103,6 @@ const Create = ({ users }) => {
               {errors.priority && <div className="text-red-500 text-xs">{errors.priority}</div>}
             </div>
 
-            {/* Statut */}
             <div className="">
               <label className="block text-gray-700 text-sm font-bold mb-2">Statut</label>
               <div className="relative">
@@ -125,7 +119,6 @@ const Create = ({ users }) => {
               {errors.status && <div className="text-red-500 text-xs">{errors.status}</div>}
             </div>
 
-            {/* Description */}
             <div className=" col-span-2">
               <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
               <textarea
@@ -137,7 +130,6 @@ const Create = ({ users }) => {
               {errors.description ? <div className="text-red-500 text-xs">{errors.description}</div> : <p className="text-gray-500 text-xs mt-1">Fournissez une description détaillée du projet.</p>}
             </div>
 
-            {/* Bouton de soumission */}
             <div className="flex items-center justify-end col-span-2 gap-4">
                 <button
                   type="submit"
@@ -147,15 +139,12 @@ const Create = ({ users }) => {
                   <i className="fas fa-save"></i> Enregistrer
                 </button>
 
-                {/* Cancel Button */}
                 <Link
                   href={route('projects.index')}
                   className="border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white text-sm font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline flex items-center gap-2 transition-transform duration-200 ease-in-out transform hover:scale-105"
                 >
                   <i className="fas fa-times"></i> Annuler
                 </Link>
-
-
             </div>
 
           </form>

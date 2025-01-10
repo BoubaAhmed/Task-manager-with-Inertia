@@ -23,7 +23,6 @@ const Create = ({ projects }) => {
       <Head title="Créer une tâche" />
       <div className="container mx-auto px-4 mt-10 sm:px-6 lg:px-8 py-8 max-w-screen-sm">
         <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-5 pb-3 grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {/* Titre du formulaire */}
           <div className="col-span-2 text-center">
             <h2 className="text-2xl font-bold text-gray-800 flex items-center justify-center gap-2">
               <i className="fas fa-tasks text-blue-500"></i> Ajouter une tâche
@@ -31,7 +30,6 @@ const Create = ({ projects }) => {
             <p className="text-gray-500 text-sm">Remplissez le formulaire ci-dessous pour créer une nouvelle tâche.</p>
           </div>
 
-          {/* Projet */}
           <div className="col-span-2">
             <label className="block text-gray-700 text-sm font-bold mb-2">Projet</label>
             <div className="relative">
@@ -52,7 +50,6 @@ const Create = ({ projects }) => {
             {errors.project_id && <div className="text-red-500 text-xs">{errors.project_id}</div>}
           </div>
 
-          {/* Nom de la tâche */}
           <div className="">
             <label className="block text-gray-700 text-sm font-bold mb-2">Nom</label>
             <div className="relative">
@@ -68,7 +65,6 @@ const Create = ({ projects }) => {
             {errors.name && <div className="text-red-500 text-xs">{errors.name}</div>}
           </div>
           
-          {/* Priorité */}
           <div className="">
             <label className="block text-gray-700 text-sm font-bold mb-2">Priorité</label>
             <div className="relative">
@@ -86,7 +82,6 @@ const Create = ({ projects }) => {
             {errors.priority && <div className="text-red-500 text-xs">{errors.priority}</div>}
           </div>
 
-          {/* Description */}
           <div className="col-span-2">
             <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
             <textarea
@@ -98,7 +93,6 @@ const Create = ({ projects }) => {
             {errors.description && <div className="text-red-500 text-xs">{errors.description}</div>}
           </div>
 
-          {/* Date de début */}
           <div className="">
             <label className="block text-gray-700 text-sm font-bold mb-2">Date de début</label>
             <input
@@ -110,7 +104,6 @@ const Create = ({ projects }) => {
             {errors.start_date && <div className="text-red-500 text-xs">{errors.start_date}</div>}
           </div>
 
-          {/* Date de fin */}
           <div className="">
             <label className="block text-gray-700 text-sm font-bold mb-2">Date de fin</label>
             <input
@@ -122,7 +115,6 @@ const Create = ({ projects }) => {
             {errors.end_date && <div className="text-red-500 text-xs">{errors.end_date}</div>}
           </div>
 
-          {/* Boutons de soumission et d'annulation */}
           <div className="flex items-center justify-end col-span-2 gap-4">
             <button
               type="submit"

@@ -1,5 +1,5 @@
 import React from 'react';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'; // Adjust the import based on your file structure
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/react';
 
 const Create = () => {
@@ -23,7 +23,7 @@ const Create = () => {
     e.preventDefault();
     post(route('users.store'), {
       onSuccess: () => {
-        // Optionally handle success, like clearing the form or redirecting
+        // 
       },
     });
   };
@@ -39,7 +39,6 @@ const Create = () => {
           </h2>
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 gap-6">
-              {/* Name */}
               <div>
                 <label
                   htmlFor="name"
@@ -69,7 +68,6 @@ const Create = () => {
                 )}
               </div>
 
-              {/* Email */}
               <div>
                 <label
                   htmlFor="email"
@@ -93,7 +91,6 @@ const Create = () => {
                 )}
               </div>
 
-              {/* Password */}
               <div>
                 <label
                   htmlFor="password"
@@ -117,7 +114,6 @@ const Create = () => {
                 )}
               </div>
 
-              {/* Confirm Password */}
               <div>
                 <label
                   htmlFor="password_confirmation"
@@ -141,7 +137,6 @@ const Create = () => {
                 )}
               </div>
 
-              {/* Phone Number */}
               <div>
                 <label
                   htmlFor="phone_number"
@@ -164,7 +159,6 @@ const Create = () => {
                 )}
               </div>
 
-              {/* Role */}
               <div>
                 <label
                   htmlFor="role"
@@ -195,7 +189,6 @@ const Create = () => {
                 )}
               </div>
 
-              {/* Status */}
               <div>
                 <label
                   htmlFor="status"
@@ -224,7 +217,6 @@ const Create = () => {
                 )}
               </div>
 
-              {/* Superuser */}
               <div className='inline-flex items-center space-x-2'>
                 <label
                   htmlFor="is_superuser"

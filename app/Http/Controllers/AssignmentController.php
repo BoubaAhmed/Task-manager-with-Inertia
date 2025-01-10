@@ -169,7 +169,7 @@ class AssignmentController extends Controller
     {
         $assignment->delete();
 
-        return redirect()->route('assignments.index');
+        return redirect()->route('assignments.index'); 
     }
 
     private function updateAssignmentStatus(Request $request, Assignment $assignment, $status, $message)

@@ -54,13 +54,6 @@ class Assignment extends Model
         return $this->belongsTo(Tache::class, 'task_id');
     }
     
-
-    /**
-     * Check and update the status of the task. 
-     *
-     * @param \App\Models\Tache $task
-     * @return void
-     */
     public function checkAndUpdateTaskStatus($task)
     {
         $completedAssignmentsCount = Assignment::where('task_id', $task->id)
@@ -86,13 +79,6 @@ class Assignment extends Model
         }
     }
 
-
-    /**
-     * Check if the user is already assigned to the task in the same project.
-     *
-     * @param \App\Models\Assignment $assignment
-     * @return bool
-     */
     public static function isUserAssignedToSameTaskInProject(Assignment $assignment)
     {
         return self::where('user_id', $assignment->user_id)

@@ -4,7 +4,6 @@ import { Head, useForm } from "@inertiajs/react";
 import React from "react";
 
 const Tasks = ({ tasks }) => {
-  console.log(tasks);
   const { patch } = useForm();
 
   const updateTaskStatus = (assignmentId, status) => {
