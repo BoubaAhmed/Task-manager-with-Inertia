@@ -1,9 +1,12 @@
 import Modal from '@/Components/Modal';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import { useForm } from '@inertiajs/react';
+import { Head, Link,  usePage } from '@inertiajs/react';
 import React, { useEffect, useState } from 'react';
 
 const Index = ({ users }) => {
+      const { delete: deleteRequest} = useForm();
+
     const [searchQuery, setSearchQuery] = useState('');
     const [userList, setUserList] = useState(users);
     const [currentPage, setCurrentPage] = useState(1);
@@ -14,7 +17,6 @@ const Index = ({ users }) => {
     const [showUserModal, setShowUserModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
 
-    const { delete: deleteRequest } = useForm();
     const { flash , auth } = usePage().props;
     const [message, setMessage] = useState({ success: null, error: null });
 
@@ -42,14 +44,14 @@ const Index = ({ users }) => {
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
     );
-    const handleDeleteClick = (projectId) => {
-        setUserToDelete(projectId);
+    const handleDeleteClick = (userId) => {
+        setUserToDelete(userId);
         setShowModal(true);
     };
 
-    const handleConfirmDelete = () => {
+    const handleConfirmDelete = () => { 
         if (userToDelete) {
-            deleteRequest(`/projects/${projectToDelete}`, {
+            deleteRequest(`/users/${userToDelete}`, {
             onSuccess: () => setShowModal(false),
             onError: () => setShowModal(false),
             });
