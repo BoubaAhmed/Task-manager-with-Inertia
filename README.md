@@ -1,7 +1,3 @@
-Got it! Let's create a **professional and polished README** for your **Tasky** project, built with **React.js**, **Laravel**, and **Inertia.js**. Here's the updated version:
-
----
-
 ```markdown
 # 🚀 Tasky - Plateforme de Gestion de Projets et Tâches  
 **Une solution moderne et collaborative pour gérer vos projets et tâches efficacement**  
