@@ -69,7 +69,7 @@ Avec Tasky, vous pouvez :
 ### Installation  
 1. Clonez le repository :  
    ```bash  
-   git clone https://github.com/votreusername/tasky.git  
+   git clone https://github.com/BoubaAhmed/Task-manager-with-Inertia.git 
    cd tasky  
    ```  
 
@@ -135,6 +135,6 @@ Nous accueillons les contributions ! Suivez ces étapes :
 ---
 
 ## 📧 Contact  
-**Équipe Tasky** - [contact@tasky.com](mailto:contact@tasky.com)  
-[![Twitter](https://img.shields.io/twitter/follow/tasky?style=social)](https://twitter.com/tasky)  
+**Équipe Tasky** - [contact@tasky.com](mailto:ahmedbouba383@gmail.com)  
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-Contact-brightgreen)](https://wa.me/+212628987577_)  
 
