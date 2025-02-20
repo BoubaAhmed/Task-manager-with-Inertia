@@ -1,4 +1,3 @@
-```markdown
 # 🚀 Tasky - Plateforme de Gestion de Projets et Tâches  
 **Une solution moderne et collaborative pour gérer vos projets et tâches efficacement**  
 
